@@ -1,7 +1,7 @@
 <template>
   <main class="">
     <div
-      class="h-screen overflow-auto font-Josefin-sans mx-auto w-full max-w-[728px] px-4 sm:px-6 shadow-2xl"
+      class="h-screen overflow-auto font-Josefin-sans mx-auto w-full max-w-[728px]  shadow-2xl"
     >
       <Header />
       <h2
@@ -102,7 +102,6 @@ const shuffledGrid = ref([]);
 const { data } = await useAsyncData(() => queryContent("/data").findOne());
 const state = ref(0);
 const win = ref(-1);
-
 const remainTimes = ref(15);
 
 function initData(data) {
@@ -374,14 +373,16 @@ async function copyToClipboard(target) {
   }
 }
 
-watch(shuffledGrid, (newVal) => {
+watch(remainTimes, (newVal) => {
+  console.log("shuffledGrid changed:", newVal, "remainTimes:", remainTimes.value);
   if (process.client) {
     localStorage.setItem(
       "gameData",
       JSON.stringify({
         [today]: {
-          shuffledGrid: newVal,
+          shuffledGrid: shuffledGrid.value,
           remainTimes: remainTimes.value,
+          win: win.value,
         },
       })
     );
@@ -397,6 +398,7 @@ function initShuffledGrid() {
     console.log("gameData:", localData, "game data today:", localData[today]);
     shuffledGrid.value = localData[today].shuffledGrid;
     remainTimes.value = localData[today].remainTimes;
+    win.value = localData[today].win;
     return;
   }
 
@@ -411,6 +413,28 @@ onMounted(() => {
   initShuffledGrid();
   console.log("shuffledGrid-after:", shuffledGrid.value);
   initGrid();
+});
+
+useHead({
+  title: "Movixa - Jogo Diário de Palavras",
+  meta: [
+    {
+      name: "description",
+      content:
+        "Um jogo de adivinhação de palavras onde você combina palavras movendo letras",
+    },
+  ],
+  link: [
+    {
+      rel: "canonical",
+      href: "https://movixa.com",
+    },
+    {
+      rel: "icon",
+      href: "/favicon.ico",
+      type: "image/x-icon",
+    },
+  ],
 });
 </script>
 
