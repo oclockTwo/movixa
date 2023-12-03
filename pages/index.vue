@@ -1,7 +1,7 @@
 <template>
   <main class="">
     <div
-      class="h-screen overflow-auto font-Josefin-sans mx-auto w-full max-w-[728px]  shadow-2xl"
+      class="h-screen overflow-auto font-Josefin-sans mx-auto w-full max-w-[728px] shadow-2xl"
     >
       <Header />
       <h2
@@ -28,6 +28,9 @@
               @dragstart="dragStart($event, rowIndex, colIndex)"
               @drop="drop(rowIndex, colIndex)"
               @dragleave="dragLeave(rowIndex, colIndex)"
+              @touchstart="touchStart($event, rowIndex, colIndex)"
+              @touchmove="touchMove($event, rowIndex, colIndex)"
+              @touchend="touchEnd($event, rowIndex, colIndex)"
             >
               <p
                 v-if="item.letter !== ' '"
@@ -85,6 +88,15 @@
           </button>
         </div>
       </div>
+      <p class="px-2 mt-20 text-center">
+        Lamento, por enquanto o movixa só pode ser jogado no PC, e atualmente
+        não é possível arrastar elementos em dispositivos móveis. Estou
+        trabalhando até tarde para resolver isso, e espero solucionar este
+        problema até o dia 5 de dezembro.
+      </p>
+      <div class="flex justify-center">
+        <img src="/images/sorryemoji.png" class="w-[100px]" />
+      </div>
     </div>
   </main>
   <div class="">
@@ -141,6 +153,7 @@ let draggedItem = null;
 function dragStart(event, rowIndex, colIndex) {
   event.dataTransfer.effectAllowed = "move";
   draggedItem = { rowIndex, colIndex };
+  console.log("dragStart:", rowIndex, colIndex);
 }
 
 function drop(targetRowIndex, targetColIndex) {
@@ -175,6 +188,22 @@ function drop(targetRowIndex, targetColIndex) {
   }
 
   draggedItem = null;
+}
+
+function touchStart(event, rowIndex, colIndex) {
+  // 处理触摸开始
+  // console.log("touchStart:", rowIndex, colIndex)
+  // dragStart(event, rowIndex, colIndex);
+}
+
+function touchMove(event, rowIndex, colIndex) {
+  // event.preventDefault();
+}
+
+function touchEnd(event, rowIndex, colIndex) {
+  // 处理触摸结束
+  // console.log("touchEnd:", rowIndex, colIndex);
+  // drop(rowIndex, colIndex);
 }
 
 function setLetterStyleAndState(row, col) {
@@ -374,7 +403,12 @@ async function copyToClipboard(target) {
 }
 
 watch(remainTimes, (newVal) => {
-  console.log("shuffledGrid changed:", newVal, "remainTimes:", remainTimes.value);
+  console.log(
+    "shuffledGrid changed:",
+    newVal,
+    "remainTimes:",
+    remainTimes.value
+  );
   if (process.client) {
     localStorage.setItem(
       "gameData",
