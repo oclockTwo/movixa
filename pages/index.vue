@@ -187,6 +187,7 @@ function touchStart(event, rowIndex, colIndex) {
   // 处理触摸开始
   // console.log("touchStart:", rowIndex, colIndex)
   movedItem = { rowIndex, colIndex };
+  if(shuffledGrid.value[rowIndex][colIndex].state === 2) return;
 }
 
 function touchMove(event, rowIndex, colIndex) {
@@ -202,6 +203,7 @@ function touchEnd(event, rowIndex, colIndex) {
   if (shuffledGrid.value[targetIndex[0]][targetIndex[1]].state === 2) return;
   if (rowIndex === targetIndex[0] && colIndex === targetIndex[1]) return;
   if (!movedItem || remainTimes.value <= 0) return;
+
   // 交换数据
   [
     shuffledGrid.value[rowIndex][colIndex],
