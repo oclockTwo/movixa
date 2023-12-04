@@ -22,7 +22,7 @@ import { Switch } from '@headlessui/vue'
 const enabled = ref(false);
 const theme = ref('light');
 watch(enabled, (value) => {
-  theme.value = value ? 'coffee' : 'light';
+  theme.value = value ? 'dark' : 'light';
   document.documentElement.setAttribute("data-theme", theme.value);
 });
 

@@ -1,9 +1,9 @@
 <template>
   <div>
     <dialog id="my_modal_2" class="modal">
-      <div class="modal-box">
+      <div class="modal-box bg-gray-200">
         <h2 class="font-bold text-lg text-center">como jogar?</h2>
-        <p class="m-3 select-none text-justify leading-6 text-zinc-900">
+        <p class="m-3 select-none text-justify leading-6 text-zinc-900 ">
           Resolva o <b>Movixa</b> em 15 movimentos ou menos.<br />
           <br />
           Rearranje as letras para formar as palavras corretas, horizontal e
@@ -16,7 +16,7 @@
           <img
             src="/images/example1.png"
             class="w-1/2 mx-auto"
-            alt="waffle jogo 1"
+            alt="movixa jogo 1"
           />
         </div>
         <p class="m-3 select-none text-justify leading-6 text-zinc-900">
@@ -29,7 +29,7 @@
           <img
             src="/images/example3.png"
             class="mx-auto w-1/3"
-            alt="waffle jogo 2"
+            alt="movixa jogo 2"
           />
         </div>
         <p class="m-3 select-none text-justify leading-6 text-zinc-900">
@@ -55,7 +55,7 @@
           <img
             src="/images/example4.png"
             class="mx-auto w-1/2"
-            alt="waffle jogo 3"
+            alt="movixa jogo 3"
           />
         </div>
         <p class="m-3 select-none text-justify leading-6 text-zinc-900">
@@ -66,7 +66,7 @@
           <img
             src="/images/example5.png"
             class="mx-auto w-1/2"
-            alt="waffle jogo 4"
+            alt="movixa jogo 4"
           />
         </div>
         <hr />

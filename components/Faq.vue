@@ -50,12 +50,17 @@ const faqs = [
   {
     question: "Como jogar movixa?",
     answer: `Por favor, clique no botão no canto superior direito da página para ver.
-Simplificando, há um total de 6 palavras, cada palavra tem 5 letras, e você precisa mover cada letra para a posição correta. Verde representa a posição correta, amarelo indica que a letra está na linha ou coluna correta, mas não na posição correta, e cinza significa que a palavra não está na linha nem na coluna correta.`,
+Simplificando, há um total de 6 palavras, cada palavra tem 5 letras, 
+e você precisa mover cada letra para a posição correta. Verde representa 
+a posição correta, amarelo indica que a letra está na linha ou coluna 
+correta, mas não na posição correta, e cinza significa que a palavra 
+não está na linha nem na coluna correta.`,
   },
   {
     question: "O jogo está completamente desenvolvido?",
     answer:
-      "Não, atualmente só a versão inicial foi concluída, e mais funcionalidades serão adicionadas posteriormente.",
+      `Não, atualmente só a versão inicial foi concluída, e mais funcionalidades 
+serão adicionadas posteriormente.`,
   },
   {
     question: "Por que desenvolver este jogo?",

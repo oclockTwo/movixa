@@ -99,9 +99,7 @@
       </div>
     </div>
   </main>
-  <div class="">
-    <Faq />
-  </div>
+  <Faq />
   <Introduction />
 </template>
 
