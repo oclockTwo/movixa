@@ -33,6 +33,7 @@
               @touchend="touchEnd($event, rowIndex, colIndex)"
             >
               <p
+                :id="`${rowIndex}-${colIndex}`"
                 v-if="item.letter !== ' '"
                 :class="item.style"
                 class="w-[70px] h-16 custom:h-20 custom:w-[84px]"
@@ -188,20 +189,62 @@ function drop(targetRowIndex, targetColIndex) {
   draggedItem = null;
 }
 
+// 手机滑动元素
+let movedItem = null;
+
 function touchStart(event, rowIndex, colIndex) {
   // 处理触摸开始
   // console.log("touchStart:", rowIndex, colIndex)
-  // dragStart(event, rowIndex, colIndex);
+  movedItem = { rowIndex, colIndex };
 }
 
 function touchMove(event, rowIndex, colIndex) {
-  // event.preventDefault();
+  event.preventDefault();
 }
 
 function touchEnd(event, rowIndex, colIndex) {
   // 处理触摸结束
-  // console.log("touchEnd:", rowIndex, colIndex);
-  // drop(rowIndex, colIndex);
+  if (movedItem === null) return;
+  let touch = event.changedTouches[0];
+  let targetIndex = findDivAt(touch.clientX, touch.clientY);
+
+  if (shuffledGrid.value[targetIndex[0]][targetIndex[1]].state === 2) return;
+  if (rowIndex === targetIndex[0] && colIndex === targetIndex[1]) return;
+  if (!movedItem || remainTimes.value <= 0) return;
+  // 交换数据
+  [
+    shuffledGrid.value[rowIndex][colIndex],
+    shuffledGrid.value[targetIndex[0]][targetIndex[1]],
+  ] = [
+    shuffledGrid.value[targetIndex[0]][targetIndex[1]],
+    shuffledGrid.value[rowIndex][colIndex],
+  ];
+
+  setLetterStyleAndState(rowIndex, colIndex);
+  setLetterStyleAndState(targetIndex[0], targetIndex[1]);
+
+  remainTimes.value--;
+  if (isComplete()) {
+    win.value = 1;
+  }
+
+  if (remainTimes.value === 0) {
+    win.value = 0;
+    setGameOver();
+  }
+}
+
+function findDivAt(x, y) {
+  const element = document.elementFromPoint(x, y);
+  console.log("element:", element);
+  if (element && isTwoDigitId(element.id)) {
+    return element.id.split("-").map(Number);
+  }
+  return null;
+}
+
+function isTwoDigitId(id) {
+  return /^\d+-\d+$/.test(id);
 }
 
 function setLetterStyleAndState(row, col) {
