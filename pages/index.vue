@@ -170,11 +170,13 @@ function drop(targetRowIndex, targetColIndex) {
   remainTimes.value--;
   if (isComplete()) {
     win.value = 1;
+    return;
   }
 
   if (remainTimes.value === 0) {
     win.value = 0;
     setGameOver();
+    return;
   }
 
   draggedItem = null;
@@ -219,11 +221,13 @@ function touchEnd(event, rowIndex, colIndex) {
   remainTimes.value--;
   if (isComplete()) {
     win.value = 1;
+    return;
   }
 
   if (remainTimes.value === 0) {
     win.value = 0;
     setGameOver();
+    return;
   }
 }
 
