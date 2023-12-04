@@ -89,15 +89,6 @@
           </button>
         </div>
       </div>
-      <p class="px-2 mt-20 text-center">
-        Lamento, por enquanto o movixa só pode ser jogado no PC, e atualmente
-        não é possível arrastar elementos em dispositivos móveis. Estou
-        trabalhando até tarde para resolver isso, e espero solucionar este
-        problema até o dia 5 de dezembro.
-      </p>
-      <div class="flex justify-center">
-        <img src="/images/sorryemoji.png" class="w-[100px]" />
-      </div>
     </div>
   </main>
   <Faq />
