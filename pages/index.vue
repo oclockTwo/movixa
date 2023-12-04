@@ -128,10 +128,10 @@ function formateData(data) {
   for (let i = 0; i < result.length; i++) {
     for (let j = 0; j < result[i].length; j++) {
       result[i][j] = {
-        id: `${i}-${j}`,
+        // id: `${i}-${j}`,
         letter: result[i][j],
-        style: "nomal-cell-style",
-        state: state.value,
+        // style: "nomal-cell-style",
+        // state: state.value,
       };
     }
   }
@@ -275,48 +275,47 @@ function isComplete() {
 }
 
 // 检查是否是固定位置
-function isFixedPosition(i, j) {
-  const fixedPositions = [
-    { x: 0, y: 0 },
-    { x: 0, y: 4 },
-    { x: 4, y: 0 },
-    { x: 4, y: 4 },
-    { x: 2, y: 2 },
-    { x: 1, y: 1 },
-    { x: 1, y: 3 },
-    { x: 3, y: 1 },
-    { x: 3, y: 3 },
-  ];
-  return fixedPositions.some((pos) => pos.x === i && pos.y === j);
-}
-
+// function isFixedPosition(i, j) {
+//   const fixedPositions = [
+//     { x: 0, y: 0 },
+//     { x: 0, y: 4 },
+//     { x: 4, y: 0 },
+//     { x: 4, y: 4 },
+//     { x: 2, y: 2 },
+//     { x: 1, y: 1 },
+//     { x: 1, y: 3 },
+//     { x: 3, y: 1 },
+//     { x: 3, y: 3 },
+//   ];
+//   return fixedPositions.some((pos) => pos.x === i && pos.y === j);
+// }
 // 打乱字母顺序的函数
-function shuffleGrid(grid) {
-  // 获取所有可以交换的位置
-  let availablePositions = [];
-  for (let i = 0; i < grid.length; i++) {
-    for (let j = 0; j < grid[i].length; j++) {
-      if (!isFixedPosition(i, j)) {
-        availablePositions.push({ x: i, y: j });
-      }
-    }
-  }
+// function shuffleGrid(grid) {
+//   // 获取所有可以交换的位置
+//   let availablePositions = [];
+//   for (let i = 0; i < grid.length; i++) {
+//     for (let j = 0; j < grid[i].length; j++) {
+//       if (!isFixedPosition(i, j)) {
+//         availablePositions.push({ x: i, y: j });
+//       }
+//     }
+//   }
 
-  // 随机交换这些位置的元素
-  for (let pos of availablePositions) {
-    let i = pos.x;
-    let j = pos.y;
-    let randomIndex = Math.floor(Math.random() * availablePositions.length);
-    let randomPos = availablePositions[randomIndex];
+//   // 随机交换这些位置的元素
+//   for (let pos of availablePositions) {
+//     let i = pos.x;
+//     let j = pos.y;
+//     let randomIndex = Math.floor(Math.random() * availablePositions.length);
+//     let randomPos = availablePositions[randomIndex];
 
-    // 交换元素
-    let temp = grid[i][j];
-    grid[i][j] = grid[randomPos.x][randomPos.y];
-    grid[randomPos.x][randomPos.y] = temp;
-  }
+//     // 交换元素
+//     let temp = grid[i][j];
+//     grid[i][j] = grid[randomPos.x][randomPos.y];
+//     grid[randomPos.x][randomPos.y] = temp;
+//   }
 
-  return grid;
-}
+//   return grid;
+// }
 
 function isCorrectPosition(rowIndex, colIndex) {
   return (
@@ -441,12 +440,6 @@ async function copyToClipboard(target) {
 }
 
 watch(remainTimes, (newVal) => {
-  console.log(
-    "shuffledGrid changed:",
-    newVal,
-    "remainTimes:",
-    remainTimes.value
-  );
   if (process.client) {
     localStorage.setItem(
       "gameData",
@@ -475,7 +468,19 @@ function initShuffledGrid() {
   }
 
   console.log("no game data");
-  shuffledGrid.value = shuffleGrid(correctGrid.value.map((row) => [...row]));
+  // shuffledGrid.value = shuffleGrid(correctGrid.value.map((row) => [...row]));
+  const arr = data.value[today]["shuffle"];
+  for(let i = 0; i < arr.length; i++) {
+    for(let j = 0; j < arr[i].length; j++) {
+      arr[i][j] = {
+        letter: arr[i][j],
+        style: "nomal-cell-style",
+        state: state.value,
+        id: `${i}-${j}`,
+      }
+    }
+  }
+  shuffledGrid.value = arr;
 }
 
 onMounted(() => {
