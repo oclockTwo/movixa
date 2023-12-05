@@ -8,7 +8,9 @@
       group="people"
       @update="onUpdate"
       @add="onAdd"
-      :move="false"
+      @move="onMove"
+      @end="onEnd"
+      @start="onStart"
       :sort="false"
       @remove="remove"
     >
@@ -26,7 +28,7 @@
       animation="150"
       group="people"
       ghostClass="ghost"
-      :move="false"
+      @move="onMove"
       :sort="false"
       @update="onUpdate"
       @add="onAdd"
@@ -42,8 +44,8 @@
     </VueDraggable>
   </div>
   <div class="flex justify-between">
-    <preview-list :list="list1" />
-    <preview-list :list="list2" />
+    <!-- <preview-list :list="list1" />
+    <preview-list :list="list2" /> -->
   </div>
 </template>
 
@@ -82,5 +84,15 @@ function onAdd() {
 }
 function remove() {
   console.log('remove')
+}
+function onMove(event) {
+  // console.log('move', event);
+  return false;
+}
+function onEnd(event) {
+  console.log('end', event);
+}
+function onStart(event) {
+  console.log('start', event);
 }
 </script>

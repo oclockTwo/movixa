@@ -70,7 +70,7 @@
           />
         </div>
         <hr />
-        <p class="m-3 text-xs leading-6 select-none text-zinc-400">
+        <!-- <p class="m-3 text-xs leading-6 select-none text-zinc-400">
           criado por
           <a
             href="https://twitter.com/BingBlini"
@@ -78,7 +78,7 @@
             class="text-green-500"
             >blini</a
           >
-        </p>
+        </p> -->
         <div class="modal-action">
           <form method="dialog">
             <button class="btn">Fechar</button>

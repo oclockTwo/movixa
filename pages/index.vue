@@ -90,9 +90,9 @@
         </div>
       </div>
       <p class="text-center mt-5 text-sm text-zinc-400 px-5">
-        O movixa já tem suas principais funcionalidades desenvolvidas, mas ainda
-        estamos aprimorando muitos detalhes. Espero que você goste deste pequeno
-        jogo.
+        O movixa já está disponível para jogar, mas ainda estamos aprimorando
+        muitos detalhes na experiência de jogo. Espero que você goste deste
+        pequeno jogo.
       </p>
     </div>
   </main>
@@ -196,7 +196,9 @@ function touchStart(event, rowIndex, colIndex) {
   // 处理触摸开始
   // console.log("touchStart:", rowIndex, colIndex)
   movedItem = { rowIndex, colIndex };
-  if (shuffledGrid.value[rowIndex][colIndex].state === 2) return;
+  if (shuffledGrid.value[rowIndex][colIndex].state === 2) {
+    // event.preventDefault();
+  }
 }
 
 function touchMove(event, rowIndex, colIndex) {
@@ -210,6 +212,7 @@ function touchEnd(event, rowIndex, colIndex) {
   let targetIndex = findDivAt(touch.clientX, touch.clientY);
 
   if (shuffledGrid.value[targetIndex[0]][targetIndex[1]].state === 2) return;
+  if (shuffledGrid.value[rowIndex][colIndex].state === 2) return;
   if (rowIndex === targetIndex[0] && colIndex === targetIndex[1]) return;
   if (!movedItem || remainTimes.value <= 0) return;
 

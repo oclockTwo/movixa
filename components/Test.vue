@@ -86,40 +86,61 @@ const originalList = ref(null);
 const futureList = ref(null);
 
 const handleDragEndItem = () => {
+  let movingItem, futureItem, _listFrom, _listTo;
+
+  // 判断拖动起始和目标列表是否相同
   if (originalList.value === futureList.value) {
-    const movingItem = list1.value[originalIndex.value];
-    const futureItem = list1.value[futureIndex.value];
+    // 从同一个列表中获取项目
+    movingItem = originalList.value === 'list1' ? list1.value[originalIndex.value] : list2.value[originalIndex.value];
+    futureItem = futureList.value === 'list1' ? list1.value[futureIndex.value] : list2.value[futureIndex.value];
 
     if (movingItem && futureItem) {
-      const _list = [...list1.value];
-      _list[futureIndex.value] = movingItem;
-      _list[originalIndex.value] = futureItem;
-      list1.value = _list;
+      _listFrom = [...(originalList.value === 'list1' ? list1.value : list2.value)];
+      _listFrom[futureIndex.value] = movingItem;
+      _listFrom[originalIndex.value] = futureItem;
+      if (originalList.value === 'list1') {
+        list1.value = _listFrom;
+      } else {
+        list2.value = _listFrom;
+      }
     }
   } else {
-    const movingItem = list1.value[originalIndex.value];
-    const futureItem = list2.value[futureIndex.value];
+    // 从不同的列表中获取项目
+    movingItem = originalList.value === 'list1' ? list1.value[originalIndex.value] : list2.value[originalIndex.value];
+    futureItem = futureList.value === 'list1' ? list1.value[futureIndex.value] : list2.value[futureIndex.value];
 
     if (movingItem && futureItem) {
-      const _listFrom = [...list1.value];
-      const _listTo = [...list2.value];
+      _listFrom = [...(originalList.value === 'list1' ? list1.value : list2.value)];
+      _listTo = [...(futureList.value === 'list1' ? list1.value : list2.value)];
       _listTo[futureIndex.value] = movingItem;
       _listFrom[originalIndex.value] = futureItem;
-      list1.value = _listFrom;
-      list2.value = _listTo;
+      
+      if (originalList.value === 'list1') {
+        list1.value = _listFrom;
+      } else {
+        list2.value = _listFrom;
+      }
+      if (futureList.value === 'list1') {
+        list1.value = _listTo;
+      } else {
+        list2.value = _listTo;
+      }
     }
   }
+
+  // 重置所有项目的边框样式
   document
     .querySelectorAll('.list-group-item')
     .forEach(el => (el.style.border = 'none'));
 };
+
 
 const handleMoveItem = (event) => {
   document
     .querySelectorAll('.list-group-item')
     .forEach(el => (el.style.border = 'none'));
   const { index, futureIndex: _futureIndex } = event.draggedContext;
-  // console.log("move event:", event);
+  console.log("move event:", event);
   originalIndex.value = index;
   futureIndex.value = _futureIndex;
   originalList.value = event.from.getAttribute('data-list');
@@ -127,17 +148,18 @@ const handleMoveItem = (event) => {
   if (list1.value[futureIndex.value]) {
     event.to.children[futureIndex.value].style.border = '1px solid orange';
   }
+  console.log("originalIndex:", originalIndex.value, "futureIndex:", futureIndex.value, "originalList:", originalList.value, "futureList:", futureList.value);
   return false;
 };
 
 const log = () => {
-  // log function implementation
+  console.log("change");
 };
 </script>
 
 <style>
 .list-group-item {
-  padding: 5px 10px;
+  @apply w-40 h-20;
   cursor: grab;
 }
 </style>
