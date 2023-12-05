@@ -3,7 +3,7 @@
     <dialog id="my_modal_2" class="modal">
       <div class="modal-box bg-gray-200">
         <h2 class="font-bold text-lg text-center">como jogar?</h2>
-        <p class="m-3 select-none text-justify leading-6 text-zinc-900 ">
+        <p class="m-3 select-none leading-6 text-zinc-900 ">
           Resolva o <b>Movixa</b> em 15 movimentos ou menos.<br />
           <br />
           Rearranje as letras para formar as palavras corretas, horizontal e
@@ -19,7 +19,7 @@
             alt="movixa jogo 1"
           />
         </div>
-        <p class="m-3 select-none text-justify leading-6 text-zinc-900">
+        <p class="m-3 select-none leading-6 text-zinc-900">
           A letra <b>F</b> está na posição correta; as letras <b>R</b> e
           <b>E</b> estão nesta linha, mas não nas posições corretas; as letras
           <b>N</b> e <b>M</b> não estão nesta linha.
@@ -32,7 +32,7 @@
             alt="movixa jogo 2"
           />
         </div>
-        <p class="m-3 select-none text-justify leading-6 text-zinc-900">
+        <p class="m-3 select-none leading-6 text-zinc-900">
           letra <b>E</b>, Esta letra está em um canto, então ou a palavra
           vertical contém esta letra ou a palavra horizontal.
         </p>
@@ -47,7 +47,7 @@
         >
           A MESMA LETRA VÁRIAS VEZES EM UMA PALAVRA
         </h3>
-        <p class="m-3 select-none text-justify leading-6 text-zinc-900">
+        <p class="m-3 select-none leading-6 text-zinc-900">
           Neste caso, a palavra deve conter apenas um E, já que o primeiro está
           destacado, mas o segundo não. Nenhum deles está na posição correta.
         </p>
@@ -58,7 +58,7 @@
             alt="movixa jogo 3"
           />
         </div>
-        <p class="m-3 select-none text-justify leading-6 text-zinc-900">
+        <p class="m-3 select-none leading-6 text-zinc-900">
           Uma vez que temos um E na posição correta, o primeiro E não é mais
           necessário nesta palavra, então ele não é mais destacado.
         </p>
@@ -70,7 +70,7 @@
           />
         </div>
         <hr />
-        <p class="m-3 text-xs leading-6 text-justify select-none text-zinc-400">
+        <p class="m-3 text-xs leading-6 select-none text-zinc-400">
           criado por
           <a
             href="https://twitter.com/BingBlini"
