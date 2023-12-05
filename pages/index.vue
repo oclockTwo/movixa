@@ -89,6 +89,11 @@
           </button>
         </div>
       </div>
+      <p class="text-center mt-5 text-sm text-zinc-400 px-5">
+        O movixa já tem suas principais funcionalidades desenvolvidas, mas ainda
+        estamos aprimorando muitos detalhes. Espero que você goste deste pequeno
+        jogo.
+      </p>
     </div>
   </main>
   <Faq />
@@ -191,7 +196,7 @@ function touchStart(event, rowIndex, colIndex) {
   // 处理触摸开始
   // console.log("touchStart:", rowIndex, colIndex)
   movedItem = { rowIndex, colIndex };
-  if(shuffledGrid.value[rowIndex][colIndex].state === 2) return;
+  if (shuffledGrid.value[rowIndex][colIndex].state === 2) return;
 }
 
 function touchMove(event, rowIndex, colIndex) {
@@ -472,14 +477,14 @@ function initShuffledGrid() {
   console.log("no game data");
   // shuffledGrid.value = shuffleGrid(correctGrid.value.map((row) => [...row]));
   const arr = data.value[today]["shuffle"];
-  for(let i = 0; i < arr.length; i++) {
-    for(let j = 0; j < arr[i].length; j++) {
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = 0; j < arr[i].length; j++) {
       arr[i][j] = {
         letter: arr[i][j],
         style: "nomal-cell-style",
         state: state.value,
         id: `${i}-${j}`,
-      }
+      };
     }
   }
   shuffledGrid.value = arr;
