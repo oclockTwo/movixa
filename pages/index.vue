@@ -233,7 +233,7 @@ function touchEnd(event, rowIndex, colIndex) {
 
 function findDivAt(x, y) {
   const element = document.elementFromPoint(x, y);
-  console.log("element:", element);
+  // console.log("element:", element);
   if (element && isTwoDigitId(element.id)) {
     return element.id.split("-").map(Number);
   }

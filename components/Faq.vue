@@ -31,9 +31,9 @@
               </DisclosureButton>
             </dt>
             <DisclosurePanel as="dd" class="mt-2 pr-12">
-              <pre class="text-base leading-7 text-gray-600">{{
+              <p class="text-base leading-7 text-gray-600">{{
                 faq.answer
-              }}</pre>
+              }}</p>
             </DisclosurePanel>
           </Disclosure>
         </dl>
