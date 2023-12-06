@@ -1,10 +1,10 @@
 <template>
   <div>
     <dialog id="my_modal_2" class="modal">
-      <div class="modal-box bg-gray-200">
+      <div class="modal-box bg-gray-200 Lato">
         <h2 class="font-bold text-lg text-center">como jogar?</h2>
         <p class="m-3 select-none leading-6 text-zinc-900 ">
-          Resolva o <b>Movixa</b> em 15 movimentos ou menos.<br />
+          Resolva o <b>Movixa</b> em 20 movimentos ou menos.<br />
           <br />
           Rearranje as letras para formar as palavras corretas, horizontal e
           verticalmente. Arraste as letras para qualquer lugar no tabuleiro. As
@@ -91,4 +91,8 @@
 
 <script setup></script>
 
-<style scoped></style>
+<style scoped>
+.Lato {
+  font-family: "Lato", sans-serif;
+}
+</style>

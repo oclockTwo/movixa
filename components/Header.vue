@@ -20,9 +20,7 @@
     </div>
     <div class="">
       <h1>
-        <a href="/" class="btn btn-ghost text-xl"
-          >Movixa</a
-        >
+        <a href="/" class="btn btn-ghost text-xl">Movixa</a>
       </h1>
     </div>
     <div class="">
@@ -39,6 +37,7 @@
 </template>
 
 <script setup>
+import { onMounted } from "vue";
 function openIntroduction2() {
   const modal = document.getElementById("my_modal_2");
   console.log("modal:", modal);
@@ -47,10 +46,9 @@ function openIntroduction2() {
   }
 }
 
-const lang = ref("en");
-function changeLanuage(langString) {
-  lang.value = langString;
-}
+onMounted(() => {
+  openIntroduction2();
+});
 </script>
 
 <style scoped>
