@@ -11,38 +11,51 @@
       </h2>
       <div v-auto-animate>
         <div
-          class="mt-6 flex flex-col gap-3 mx-auto"
+          class="mt-6 grid grid-cols-5 gap-3 mx-auto"
           style="width: 100%; max-width: 450px"
+          ref="list"
         >
           <div
-            v-for="(items, rowIndex) of shuffledGrid"
-            :key="rowIndex"
-            class="flex justify-between w-full"
-            v-auto-animate
+            v-for="item of shuffledGrid[0]"
+            :key="item.id"
+            :data-state="item.state"
           >
-            <div
-              v-for="(item, colIndex) of items"
-              :key="item.id"
-              :draggable="item.state === 2 || item.state === -1 ? false : true"
-              @dragover.prevent
-              @dragstart="dragStart($event, rowIndex, colIndex)"
-              @drop="drop(rowIndex, colIndex)"
-              @dragleave="dragLeave(rowIndex, colIndex)"
-              @touchstart="touchStart($event, rowIndex, colIndex)"
-              @touchmove="touchMove($event, rowIndex, colIndex)"
-              @touchend="touchEnd($event, rowIndex, colIndex)"
-            >
-              <p
-                :id="`${rowIndex}-${colIndex}`"
-                v-if="item.letter !== ' '"
-                :class="item.style"
-                class="w-[70px] h-16 custom:h-20 custom:w-[84px]"
-              >
-                {{ item.letter }}
-              </p>
-            </div>
+            <p :class="item.style">{{ item.letter }}</p>
+          </div>
+          <div
+            v-for="item of shuffledGrid[1]"
+            :key="item.id"
+            :data-state="item.state"
+          >
+            <p :class="item.style" v-if="item.letter !== ' '">
+              {{ item.letter }}
+            </p>
+          </div>
+          <div
+            v-for="item of shuffledGrid[2]"
+            :key="item.id"
+            :data-state="item.state"
+          >
+            <p :class="item.style">{{ item.letter }}</p>
+          </div>
+          <div
+            v-for="item of shuffledGrid[3]"
+            :key="item.id"
+            :data-state="item.state"
+          >
+            <p :class="item.style" v-if="item.letter !== ' '">
+              {{ item.letter }}
+            </p>
+          </div>
+          <div
+            v-for="item of shuffledGrid[4]"
+            :key="item.id"
+            :data-state="item.state"
+          >
+            <p :class="item.style">{{ item.letter }}</p>
           </div>
         </div>
+
         <div
           class="flex justify-center mt-8 text-4xl tracking-wider text-zinc-400"
         >
@@ -96,15 +109,16 @@
       </p>
     </div>
   </main>
-  <Faq />
   <Introduction />
-  <!-- <Test /> -->
-  <!-- <Test2 /> -->
+  <Faq />
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
 import { vAutoAnimate } from "@formkit/auto-animate";
+import { Sortable, Swap } from "sortablejs/modular/sortable.core.esm";
+const list = ref(null);
+
 const today = useToday();
 const correctGrid = ref([]);
 const shuffledGrid = ref([]);
@@ -116,7 +130,6 @@ const remainTimes = ref(15);
 function initData(data) {
   let result = [];
   for (let word of data.value[today]["words"]) {
-    // 将单词转换为字母数组，并添加到结果数组中
     result.push(Array.from(word));
   }
   result = formateData(result);
@@ -131,127 +144,14 @@ function formateData(data) {
   result.push([data[1][3], " ", data[5][3], " ", data[3][3]]);
   result.push([data[2][0], data[2][1], data[2][2], data[2][3], data[2][4]]);
 
-  // 添加属性
   for (let i = 0; i < result.length; i++) {
     for (let j = 0; j < result[i].length; j++) {
       result[i][j] = {
-        // id: `${i}-${j}`,
         letter: result[i][j],
-        // style: "nomal-cell-style",
-        // state: state.value,
       };
     }
   }
   return result;
-}
-
-// 拖动元素
-let draggedItem = null;
-function dragStart(event, rowIndex, colIndex) {
-  event.dataTransfer.effectAllowed = "move";
-  draggedItem = { rowIndex, colIndex };
-  console.log("dragStart:", rowIndex, colIndex);
-}
-
-function drop(targetRowIndex, targetColIndex) {
-  if (shuffledGrid.value[targetRowIndex][targetColIndex].state === 2) return;
-  if (
-    draggedItem.rowIndex === targetRowIndex &&
-    draggedItem.colIndex === targetColIndex
-  )
-    return;
-  if (!draggedItem || remainTimes.value <= 0) return;
-
-  // 交换数据
-  [
-    shuffledGrid.value[targetRowIndex][targetColIndex],
-    shuffledGrid.value[draggedItem.rowIndex][draggedItem.colIndex],
-  ] = [
-    shuffledGrid.value[draggedItem.rowIndex][draggedItem.colIndex],
-    shuffledGrid.value[targetRowIndex][targetColIndex],
-  ];
-
-  setLetterStyleAndState(draggedItem.rowIndex, draggedItem.colIndex);
-  setLetterStyleAndState(targetRowIndex, targetColIndex);
-
-  remainTimes.value--;
-  if (isComplete()) {
-    win.value = 1;
-    return;
-  }
-
-  if (remainTimes.value === 0) {
-    win.value = 0;
-    setGameOver();
-    return;
-  }
-
-  draggedItem = null;
-}
-
-// 手机滑动元素
-let movedItem = null;
-
-function touchStart(event, rowIndex, colIndex) {
-  // 处理触摸开始
-  // console.log("touchStart:", rowIndex, colIndex)
-  movedItem = { rowIndex, colIndex };
-  if (shuffledGrid.value[rowIndex][colIndex].state === 2) {
-    // event.preventDefault();
-  }
-}
-
-function touchMove(event, rowIndex, colIndex) {
-  event.preventDefault();
-}
-
-function touchEnd(event, rowIndex, colIndex) {
-  // 处理触摸结束
-  if (movedItem === null) return;
-  let touch = event.changedTouches[0];
-  let targetIndex = findDivAt(touch.clientX, touch.clientY);
-
-  if (shuffledGrid.value[targetIndex[0]][targetIndex[1]].state === 2) return;
-  if (shuffledGrid.value[rowIndex][colIndex].state === 2) return;
-  if (rowIndex === targetIndex[0] && colIndex === targetIndex[1]) return;
-  if (!movedItem || remainTimes.value <= 0) return;
-
-  // 交换数据
-  [
-    shuffledGrid.value[rowIndex][colIndex],
-    shuffledGrid.value[targetIndex[0]][targetIndex[1]],
-  ] = [
-    shuffledGrid.value[targetIndex[0]][targetIndex[1]],
-    shuffledGrid.value[rowIndex][colIndex],
-  ];
-
-  setLetterStyleAndState(rowIndex, colIndex);
-  setLetterStyleAndState(targetIndex[0], targetIndex[1]);
-
-  remainTimes.value--;
-  if (isComplete()) {
-    win.value = 1;
-    return;
-  }
-
-  if (remainTimes.value === 0) {
-    win.value = 0;
-    setGameOver();
-    return;
-  }
-}
-
-function findDivAt(x, y) {
-  const element = document.elementFromPoint(x, y);
-  // console.log("element:", element);
-  if (element && isTwoDigitId(element.id)) {
-    return element.id.split("-").map(Number);
-  }
-  return null;
-}
-
-function isTwoDigitId(id) {
-  return /^\d+-\d+$/.test(id);
 }
 
 function setLetterStyleAndState(row, col) {
@@ -267,65 +167,9 @@ function setLetterStyleAndState(row, col) {
   }
 }
 
-function dragLeave(rowIndex, colIndex) {
-  // 可以添加一些拖拽离开的处理逻辑
-}
-
-function setGameOver() {
-  for (let i = 0; i < shuffledGrid.value.length; i++) {
-    for (let j = 0; j < shuffledGrid.value[i].length; j++) {
-      shuffledGrid.value[i][j].style = "nomal-cell-style";
-      // shuffledGrid.value[i][j].state = -1;
-    }
-  }
-}
-
 function isComplete() {
   return shuffledGrid.value.every((row) => row.every((obj) => obj.state === 2));
 }
-
-// 检查是否是固定位置
-// function isFixedPosition(i, j) {
-//   const fixedPositions = [
-//     { x: 0, y: 0 },
-//     { x: 0, y: 4 },
-//     { x: 4, y: 0 },
-//     { x: 4, y: 4 },
-//     { x: 2, y: 2 },
-//     { x: 1, y: 1 },
-//     { x: 1, y: 3 },
-//     { x: 3, y: 1 },
-//     { x: 3, y: 3 },
-//   ];
-//   return fixedPositions.some((pos) => pos.x === i && pos.y === j);
-// }
-// 打乱字母顺序的函数
-// function shuffleGrid(grid) {
-//   // 获取所有可以交换的位置
-//   let availablePositions = [];
-//   for (let i = 0; i < grid.length; i++) {
-//     for (let j = 0; j < grid[i].length; j++) {
-//       if (!isFixedPosition(i, j)) {
-//         availablePositions.push({ x: i, y: j });
-//       }
-//     }
-//   }
-
-//   // 随机交换这些位置的元素
-//   for (let pos of availablePositions) {
-//     let i = pos.x;
-//     let j = pos.y;
-//     let randomIndex = Math.floor(Math.random() * availablePositions.length);
-//     let randomPos = availablePositions[randomIndex];
-
-//     // 交换元素
-//     let temp = grid[i][j];
-//     grid[i][j] = grid[randomPos.x][randomPos.y];
-//     grid[randomPos.x][randomPos.y] = temp;
-//   }
-
-//   return grid;
-// }
 
 function isCorrectPosition(rowIndex, colIndex) {
   return (
@@ -449,7 +293,7 @@ async function copyToClipboard(target) {
   }
 }
 
-watch(remainTimes, (newVal) => {
+function setDataToLocal() {
   if (process.client) {
     localStorage.setItem(
       "gameData",
@@ -462,7 +306,7 @@ watch(remainTimes, (newVal) => {
       })
     );
   }
-});
+}
 
 function initShuffledGrid() {
   let localData = null;
@@ -477,8 +321,6 @@ function initShuffledGrid() {
     return;
   }
 
-  console.log("no game data");
-  // shuffledGrid.value = shuffleGrid(correctGrid.value.map((row) => [...row]));
   const arr = data.value[today]["shuffle"];
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < arr[i].length; j++) {
@@ -493,13 +335,69 @@ function initShuffledGrid() {
   shuffledGrid.value = arr;
 }
 
+function swapShuffledGrid(oldIndex, newIndex) {
+  const oldRow = Math.floor(oldIndex / 5);
+  const oldCol = oldIndex % 5;
+  const newRow = Math.floor(newIndex / 5);
+  const newCol = newIndex % 5;
+
+  const temp = shuffledGrid.value[oldRow][oldCol];
+  shuffledGrid.value[oldRow][oldCol] = shuffledGrid.value[newRow][newCol];
+  shuffledGrid.value[newRow][newCol] = temp;
+
+  setLetterStyleAndState(oldRow, oldCol);
+  setLetterStyleAndState(newRow, newCol);
+
+  setDataToLocal();
+}
+
 onMounted(() => {
   correctGrid.value = initData(data);
-  console.log("letterData-after:", correctGrid.value);
-  // shuffledGrid.value = shuffleGrid(correctGrid.value.map((row) => [...row]));
+  // console.log("letterData-after:", correctGrid.value);
   initShuffledGrid();
-  console.log("shuffledGrid-after:", shuffledGrid.value);
+  // console.log("shuffledGrid-after:", shuffledGrid.value);
   initGrid();
+  Sortable.mount(new Swap());
+  new Sortable(list.value, {
+    swap: true,
+    swapClass: "highlight",
+    animation: 500,
+    filter: function (event, item) {
+      // console.log("item:", item, "event:", event);
+      // console.log(event.target.className);
+      return (
+        item.getAttribute("data-state") === "2" || remainTimes.value === 0
+      );
+    },
+    onMove: function (event) {
+      // 获取目标元素，即拖动元素想要交换位置的元素
+      let target = event.related;
+      // console.log("target:", target, "event:", event);
+      // 检查目标元素是否允许交换
+      return target.getAttribute("data-state") !== "2";
+    },
+    onEnd: function (event) {
+      const oldIndex = event.oldIndex;
+      const newIndex = event.newIndex;
+      if (oldIndex === newIndex) {
+        return;
+      }
+      remainTimes.value--;
+      setTimeout(() => {
+        swapShuffledGrid(oldIndex, newIndex);
+        if (isComplete()) {
+          win.value = 1;
+          return;
+        }
+        if (remainTimes.value === 0) {
+          win.value = 0;
+          return;
+        }
+      }, 550);
+
+      // console.log("onEnd:", event);
+    },
+  });
 });
 
 useHead({
@@ -526,22 +424,25 @@ useHead({
 </script>
 
 <style scoped>
+.highlight {
+  background-color: #f9c7c8 !important;
+}
 .font-Josefin-sans {
   font-family: "Josefin Sans", sans-serif;
 }
 .nomal-cell-style {
-  @apply flex uppercase cursor-default font-sans select-none items-center border-b-4 justify-center  border-solid text-4xl bg-gray-500 font-bold text-white rounded-lg;
+  @apply flex py-4 uppercase cursor-default font-sans select-none items-center border-b-4 justify-center  border-solid text-4xl bg-gray-500 font-bold text-white rounded-lg;
 }
 .gray-cell-style {
   box-shadow: 0px 5px 0px rgba(210, 212, 215, 1);
-  @apply flex uppercase cursor-pointer font-sans select-none items-center justify-center  border-solid text-4xl  bg-[#eaecef] font-bold text-black rounded-lg;
+  @apply flex py-4 uppercase cursor-pointer font-sans select-none items-center justify-center  border-solid text-4xl  bg-[#eaecef] font-bold text-black rounded-lg;
 }
 .orange-cell-style {
   box-shadow: 0px 5px 0px rgba(202, 160, 51, 1);
-  @apply flex uppercase cursor-pointer font-sans select-none items-center justify-center  border-solid  text-4xl bg-[#e1b239] font-bold text-white rounded-lg;
+  @apply flex py-4 uppercase cursor-pointer font-sans select-none items-center justify-center  border-solid  text-4xl bg-[#e1b239] font-bold text-white rounded-lg;
 }
 .green-cell-style {
   box-shadow: 0px 5px 0px rgba(101, 147, 76, 1);
-  @apply flex uppercase cursor-pointer font-sans select-none items-center justify-center border-solid text-4xl bg-[#70a455] font-bold text-white rounded-lg;
+  @apply flex py-4 uppercase cursor-pointer font-sans select-none items-center justify-center border-solid text-4xl bg-[#70a455] font-bold text-white rounded-lg;
 }
 </style>
