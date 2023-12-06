@@ -351,6 +351,30 @@ function swapShuffledGrid(oldIndex, newIndex) {
   setDataToLocal();
 }
 
+function onEnd(event) {
+  const oldIndex = event.oldIndex;
+  const newIndex = event.newIndex;
+  if (oldIndex === newIndex) {
+    return;
+  }
+  remainTimes.value--;
+  setTimeout(() => {
+    swapShuffledGrid(oldIndex, newIndex);
+    if (isComplete()) {
+      win.value = 1;
+      setDataToLocal();
+      return;
+    }
+    if (remainTimes.value === 0) {
+      win.value = 0;
+      setDataToLocal();
+      return;
+    }
+  }, 550);
+
+  // console.log("onEnd:", event);
+}
+
 onMounted(() => {
   correctGrid.value = initData(data);
   // console.log("letterData-after:", correctGrid.value);
@@ -376,27 +400,7 @@ onMounted(() => {
       // 检查目标元素是否允许交换
       return target.getAttribute("data-state") !== "2";
     },
-    onEnd: function (event) {
-      const oldIndex = event.oldIndex;
-      const newIndex = event.newIndex;
-      if (oldIndex === newIndex) {
-        return;
-      }
-      remainTimes.value--;
-      setTimeout(() => {
-        swapShuffledGrid(oldIndex, newIndex);
-        if (isComplete()) {
-          win.value = 1;
-          return;
-        }
-        if (remainTimes.value === 0) {
-          win.value = 0;
-          return;
-        }
-      }, 550);
-
-      // console.log("onEnd:", event);
-    },
+    onEnd: onEnd,
   });
 });
 
