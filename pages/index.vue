@@ -9,11 +9,13 @@
       >
         Movixa {{ today }}
       </h2>
-      <p class="font-sans text-sm text-center mt-4 text-zinc-400">Mova os blocos para a posição correta.</p>
+      <p class="font-sans text-sm text-center mt-4 text-zinc-400">
+        Mova os blocos para a posição correta.
+      </p>
       <div v-auto-animate>
         <div
-          class="mt-6 grid grid-cols-5 gap-3 mx-auto"
-          style="width: 100%; max-width: 450px"
+          class="mt-6 grid grid-cols-5 gap-3 mx-auto px-2"
+          style="width: 100%; max-width: 466px"
           ref="list"
         >
           <div
@@ -126,7 +128,7 @@ const shuffledGrid = ref([]);
 const { data } = await useAsyncData(() => queryContent("/data").findOne());
 const state = ref(0);
 const win = ref(-1);
-const remainTimes = ref(15);
+const remainTimes = ref(20);
 
 function initData(data) {
   let result = [];
@@ -372,7 +374,6 @@ function onEnd(event) {
       return;
     }
   }, 550);
-
   // console.log("onEnd:", event);
 }
 
@@ -390,9 +391,7 @@ onMounted(() => {
     filter: function (event, item) {
       // console.log("item:", item, "event:", event);
       // console.log(event.target.className);
-      return (
-        item.getAttribute("data-state") === "2" || remainTimes.value === 0
-      );
+      return item.getAttribute("data-state") === "2" || remainTimes.value === 0;
     },
     onMove: function (event) {
       // 获取目标元素，即拖动元素想要交换位置的元素
