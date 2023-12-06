@@ -9,6 +9,7 @@
       >
         Movixa {{ today }}
       </h2>
+      <p class="font-sans text-sm text-center mt-4 text-zinc-400">Mova os blocos para a posição correta.</p>
       <div v-auto-animate>
         <div
           class="mt-6 grid grid-cols-5 gap-3 mx-auto"
@@ -102,11 +103,11 @@
           </button>
         </div>
       </div>
-      <p class="text-center mt-5 text-sm text-zinc-400 px-5">
+      <!-- <p class="text-center mt-5 text-sm text-zinc-400 px-5">
         O movixa já está disponível para jogar, mas ainda estamos aprimorando
         muitos detalhes na experiência de jogo. Espero que você goste deste
         pequeno jogo.
-      </p>
+      </p> -->
     </div>
   </main>
   <Introduction />

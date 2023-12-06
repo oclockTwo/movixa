@@ -65,12 +65,12 @@ export default defineNuxtConfig({
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
             t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
             y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-        })(window, document, "clarity", "script", "k1rbl6dgrm");
+          })(window, document, "clarity", "script", "k1rbl6dgrm");
           `,
-          hid: 'clarity-js', // 一个唯一的标识符
+          hid: "clarity-js", // 一个唯一的标识符
           // 防止 XSS 攻击，确保只有您控制的脚本被执行
-          charset: 'utf-8',
-          crossorigin: 'anonymous'
+          charset: "utf-8",
+          crossorigin: "anonymous",
         },
       ],
     },
