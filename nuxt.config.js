@@ -9,8 +9,8 @@ export default defineNuxtConfig({
     "nuxt-headlessui",
     "@nuxtjs/robots",
     "nuxt-simple-sitemap",
-    '@pinia/nuxt',
-    '@formkit/auto-animate/nuxt',
+    "@pinia/nuxt",
+    "@formkit/auto-animate/nuxt",
   ],
 
   googleFonts: {
@@ -42,13 +42,26 @@ export default defineNuxtConfig({
       script: [
         {
           defer: true,
-          'data-domain': "movixa.com",
-          src:"https://plausible.io/js/script.js",
+          "data-domain": "movixa.com",
+          src: "https://plausible.io/js/script.js",
+        },
+        {
+          async: true,
+          src: "https://www.googletagmanager.com/gtag/js?id=G-J950DBPM75",
+        },
+        {
+          children: `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-J950DBPM75');
+          `,
         },
       ],
     },
   },
-  
+
   site: {
     url: "https://movixa.com",
   },
