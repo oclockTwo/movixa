@@ -127,7 +127,7 @@ import { Sortable } from "sortablejs/modular/sortable.core.esm";
 import { useRoute } from "vue-router";
 const route = useRoute();
 const list = ref(null);
-const queryParams = route.query;
+let queryParams = route.query;
 
 const today = useToday();
 const correctGrid = ref([]);
@@ -160,6 +160,7 @@ function getDatesUntilYesterday() {
 
 function gotoDate(date) {
   window.location.href = `http://movixa.com/arquivo?date=${date}`;
+  // window.location.href = `http://localhost:3002/arquivo?date=${date}`;
 }
 
 function initData(data) {
@@ -383,6 +384,9 @@ function onEnd(event) {
 }
 
 onMounted(() => {
+  if(!queryParams || !queryParams.date) {
+    queryParams.date = '4/12/2023';
+  }
   correctGrid.value = initData(data);
   // console.log("letterData-after:", correctGrid.value);
   initShuffledGrid();
