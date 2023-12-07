@@ -109,7 +109,7 @@
   </main>
   <Introduction />
   <Share class="mt-10" />
-  <Faq />
+  <Faq mb-10 />
 </template>
 
 <script setup>
