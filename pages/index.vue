@@ -5,17 +5,17 @@
     >
       <Header />
       <h2
-        class="font-sans text-sm text-center mt-6 text-zinc-400 tracking-widest"
+        class="font-sans text-sm text-center mt-4 text-zinc-400 tracking-widest"
       >
         Movixa {{ today }}
       </h2>
-      <p class="font-sans text-sm text-center mt-4 text-zinc-400">
+      <!-- <p class="font-sans text-sm text-center mt-4 text-zinc-400">
         Mova os blocos para a posição correta.
-      </p>
+      </p> -->
       <div v-auto-animate>
         <div
-          class="mt-6 grid grid-cols-5 gap-3 mx-auto px-2"
-          style="width: 100%; max-width: 466px"
+          class="mt-4 grid grid-cols-5 gap-3 mx-auto px-2"
+          style="width: 100%; max-width: 420px"
           ref="list"
         >
           <div
@@ -66,27 +66,27 @@
         </div>
         <div
           v-if="win === 0"
-          class="text-center mt-8 font-bold bg-gray-500 text-white py-2"
+          class="text-center mt-4 font-bold bg-gray-500 text-white py-2"
         >
-          <p class="text-4xl mb-2">fim de jogo</p>
-          <p class="text-5xl">🥺</p>
-          <p class="text-xl font-bold">
+          <p class="text-xl mb-2">fim de jogo</p>
+          <p class="text-3xl">🥺</p>
+          <p class="text-lg font-bold">
             quase lá, compartilhe com os outros para jogarem também!
           </p>
         </div>
         <div
           v-if="win === 1"
-          class="text-center mt-8 font-bold bg-[#70a455] text-white py-2"
+          class="text-center mt-4 font-bold bg-[#70a455] text-white py-2"
         >
-          <p class="text-4xl mb-2">Você ganhou</p>
-          <p class="text-5xl">🥳</p>
-          <p class="text-xl font-bold">
+          <p class="text-xl mb-2">Você ganhou</p>
+          <p class="text-3xl">🥳</p>
+          <p class="text-lg font-bold">
             Você é muito inteligente, compartilhe com os outros para eles
             jogarem também!
           </p>
         </div>
 
-        <div v-if="win !== -1" class="flex justify-center mt-6">
+        <div v-if="win !== -1" class="flex justify-center mt-4">
           <button
             @click="copyToClipboard($event.target)"
             class="btn bg-[#70a455] hover:bg-[#70a455] btn-lg font-bold text-xl"
@@ -105,14 +105,10 @@
           </button>
         </div>
       </div>
-      <!-- <p class="text-center mt-5 text-sm text-zinc-400 px-5">
-        O movixa já está disponível para jogar, mas ainda estamos aprimorando
-        muitos detalhes na experiência de jogo. Espero que você goste deste
-        pequeno jogo.
-      </p> -->
     </div>
   </main>
   <Introduction />
+  <Share class="mt-10" />
   <Faq />
 </template>
 

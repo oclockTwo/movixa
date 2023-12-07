@@ -2,7 +2,7 @@
   <div class="bg-gray-200">
     <div class="mx-auto max-w-3xl px-6 py-24 sm:py-32 lg:px-8 lg:py-40">
       <div class="mx-auto max-w-4xl divide-y divide-gray-900/10">
-        <h2 class="text-2xl font-bold leading-10 tracking-tight text-gray-900">
+        <h2 class="text-xl font-bold leading-6 tracking-tight text-gray-900">
           Perguntas Frequentemente Feitas
         </h2>
         <dl class="mt-10 space-y-6 divide-y divide-gray-900/10">
@@ -17,7 +17,7 @@
               <DisclosureButton
                 class="flex w-full items-start justify-between text-left text-gray-900"
               >
-                <h3 class="text-2xl font-semibold leading-7">
+                <h3 class="text-lg font-semibold leading-4">
                   {{ faq.question }}
                 </h3>
                 <span class="ml-6 flex h-7 items-center">
@@ -55,6 +55,10 @@ e você precisa mover cada letra para a posição correta. Verde representa
 a posição correta, amarelo indica que a letra está na linha ou coluna 
 correta, mas não na posição correta, e cinza significa que a palavra 
 não está na linha nem na coluna correta.`,
+  },
+  {
+    question: "Quando haverá atualizações?",
+    answer: "Novas palavras diárias serão atualizadas à meia-noite, às 00h00.",
   },
   {
     question: "O jogo está completamente desenvolvido?",

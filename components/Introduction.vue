@@ -4,7 +4,7 @@
       <div class="modal-box bg-gray-200 Lato">
         <h2 class="font-bold text-lg text-center">como jogar?</h2>
         <p class="m-3 select-none leading-6 text-zinc-900 ">
-          Resolva o <b>Movixa</b> em 20 movimentos ou menos.<br />
+          Mova os blocos para a posição correta.<br />
           <br />
           Rearranje as letras para formar as palavras corretas, horizontal e
           verticalmente. Arraste as letras para qualquer lugar no tabuleiro. As
@@ -37,16 +37,16 @@
           vertical contém esta letra ou a palavra horizontal.
         </p>
         <hr />
-        <h2
+        <h3
           class="m-3 text-xl font-bold tracking-wider text-center text-gray-900 uppercase select-none"
         >
           special case
-        </h2>
-        <h3
+        </h3>
+        <h4
           class="text-center text-lg font-semibold text-gray-900 uppercase select-none"
         >
           A MESMA LETRA VÁRIAS VEZES EM UMA PALAVRA
-        </h3>
+        </h4>
         <p class="m-3 select-none leading-6 text-zinc-900">
           Neste caso, a palavra deve conter apenas um E, já que o primeiro está
           destacado, mas o segundo não. Nenhum deles está na posição correta.
