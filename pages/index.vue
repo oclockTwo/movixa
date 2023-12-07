@@ -340,16 +340,9 @@ function swapShuffledGrid(oldIndex, newIndex) {
   const newRow = Math.floor(newIndex / 5);
   const newCol = newIndex % 5;
 
-  console.log("oldIndex:", oldIndex, "newIndex:", newIndex);
-  console.log("oldRow:", oldRow, "oldCol:", oldCol, "newRow:", newRow, "newCol:", newCol);
-
-  console.log("shuffled-before:", shuffledGrid.value);
-
   const temp = shuffledGrid.value[oldRow][oldCol];
   shuffledGrid.value[oldRow][oldCol] = shuffledGrid.value[newRow][newCol];
   shuffledGrid.value[newRow][newCol] = temp;
-
-  console.log("shuffled-after:", shuffledGrid.value);
 
   setLetterStyleAndState(oldRow, oldCol);
   setLetterStyleAndState(newRow, newCol);
