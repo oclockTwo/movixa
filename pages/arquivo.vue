@@ -159,7 +159,7 @@ function getDatesUntilYesterday() {
 }
 
 function gotoDate(date) {
-  window.location.href = `http://localhost:3002/arquivo/?date=${date}`;
+  window.location.href = `http://movixo.com/arquivo?date=${date}`;
 }
 
 function initData(data) {
