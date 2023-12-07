@@ -380,7 +380,7 @@ function onEnd(event) {
       setDataToLocal();
       return;
     }
-  }, 500);
+  }, 800);
 }
 
 onMounted(() => {
