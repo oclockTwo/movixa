@@ -124,7 +124,7 @@ const shuffledGrid = ref([]);
 const { data } = await useAsyncData(() => queryContent("/data").findOne());
 const state = ref(0);
 const win = ref(-1);
-const remainTimes = ref(15);
+const remainTimes = ref(20);
 
 function initData(data) {
   let result = [];
