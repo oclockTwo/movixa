@@ -86,7 +86,7 @@
           </p>
         </div>
 
-        <div v-if="win !== -1" class="flex justify-center mt-4">
+        <div v-if="win !== -1" class="flex justify-center mt-4 mb-10">
           <button
             @click="copyToClipboard($event.target)"
             class="btn bg-[#70a455] hover:bg-[#70a455] btn-lg font-bold text-xl"
