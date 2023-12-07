@@ -9,12 +9,12 @@
       >
         Movixa {{ today }}
       </h2>
-      <!-- <p class="font-sans text-sm text-center mt-4 text-zinc-400">
+      <p class="font-sans text-sm text-center mt-2 text-zinc-400">
         Mova os blocos para a posição correta.
-      </p> -->
+      </p>
       <div v-auto-animate>
         <div
-          class="mt-4 grid grid-cols-5 gap-3 mx-auto px-2"
+          class="mt-2 grid grid-cols-5 gap-3 mx-auto px-2"
           style="width: 100%; max-width: 420px"
           ref="list"
         >
