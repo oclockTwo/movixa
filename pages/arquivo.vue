@@ -4,11 +4,23 @@
       class="h-screen overflow-auto font-Josefin-sans mx-auto w-full max-w-[728px] shadow-2xl"
     >
       <ArchiveHeader />
-      <h2
-        class="font-sans text-center mt-4 text-zinc-400 tracking-widest text-4xl"
+      <!-- <h2
+        class="font-sans text-center mt-4 text-zinc-400 tracking-widest text-xl"
       >
-        Movixa Arquivo. Em construção... Fique ligado!
-      </h2>
+        Movixa Arquivo!
+      </h2> -->
+      <div class="flex justify-center">
+        <details class="dropdown">
+          <summary class="m-1 btn btn-link">Escolha a data</summary>
+          <ul
+            class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52"
+          >
+            <li v-for="(date, index) of getDatesUntilYesterday()" :key="index">
+              <p @click="gotoDate(date)">{{ date }}</p>
+            </li>
+          </ul>
+        </details>
+      </div>
       <div v-auto-animate>
         <div
           class="mt-2 grid grid-cols-5 gap-3 mx-auto px-2"
@@ -56,11 +68,11 @@
           </div>
         </div>
 
-        <!-- <div
+        <div
           class="flex justify-center mt-8 text-4xl tracking-wider text-zinc-400"
         >
-          Restam {{ remainTimes }} trocas
-        </div> -->
+          {{ remainTimes }} trocas
+        </div>
         <div
           v-if="win === 0"
           class="text-center mt-4 font-bold bg-gray-500 text-white py-2"
@@ -111,8 +123,11 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { vAutoAnimate } from "@formkit/auto-animate";
-import { Sortable, Swap } from "sortablejs/modular/sortable.core.esm";
+import { Sortable } from "sortablejs/modular/sortable.core.esm";
+import { useRoute } from "vue-router";
+const route = useRoute();
 const list = ref(null);
+const queryParams = route.query;
 
 const today = useToday();
 const correctGrid = ref([]);
@@ -120,11 +135,36 @@ const shuffledGrid = ref([]);
 const { data } = await useAsyncData(() => queryContent("/data").findOne());
 const state = ref(0);
 const win = ref(-1);
-const remainTimes = ref(15);
+const remainTimes = ref(0);
+
+function getDatesUntilYesterday() {
+  const startDate = new Date(2023, 11, 4); // 月份从 0 开始计数，所以 11 代表 12 月
+  const today = new Date();
+  const yesterday = new Date(today.setDate(today.getDate() - 1));
+
+  let currentDate = startDate;
+  const dates = [];
+
+  while (currentDate <= yesterday) {
+    const day = currentDate.getDate();
+    const month = currentDate.getMonth() + 1; // 加 1 因为月份是从 0 开始计数的
+    const year = currentDate.getFullYear();
+
+    dates.push(`${day}/${month}/${year}`);
+    // 将日期向前移动一天
+    currentDate = new Date(currentDate.setDate(currentDate.getDate() + 1));
+  }
+
+  return dates;
+}
+
+function gotoDate(date) {
+  window.location.href = `http://localhost:3002/arquivo/?date=${date}`;
+}
 
 function initData(data) {
   let result = [];
-  for (let word of data.value[today]["words"]) {
+  for (let word of data.value[queryParams.date]["words"]) {
     result.push(Array.from(word));
   }
   result = formateData(result);
@@ -281,42 +321,15 @@ async function copyToClipboard(target) {
 
   try {
     await navigator.clipboard.writeText(
-      `Movixa Arquivo ${today} \n${colorText}\n jogo movixa`
+      `Movixa Arquivo ${remainTimes.value} trocas \n${colorText}\n jogo movixa`
     );
   } catch (err) {
     console.error("Error in copy: ", err);
   }
 }
 
-function setDataToLocal() {
-  if (process.client) {
-    localStorage.setItem(
-      "gameData",
-      JSON.stringify({
-        [today]: {
-          shuffledGrid: shuffledGrid.value,
-          remainTimes: remainTimes.value,
-          win: win.value,
-        },
-      })
-    );
-  }
-}
-
 function initShuffledGrid() {
-  let localData = null;
-  if (process.client) {
-    localData = JSON.parse(localStorage.getItem("gameData"));
-  }
-  if (localData && localData[today] && localData[today].shuffledGrid) {
-    console.log("gameData:", localData, "game data today:", localData[today]);
-    shuffledGrid.value = localData[today].shuffledGrid;
-    remainTimes.value = localData[today].remainTimes;
-    win.value = localData[today].win;
-    return;
-  }
-
-  const arr = data.value[today]["shuffle"];
+  const arr = data.value[queryParams.date]["shuffle"];
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < arr[i].length; j++) {
       arr[i][j] = {
@@ -342,14 +355,12 @@ function swapShuffledGrid(oldIndex, newIndex) {
 
   setLetterStyleAndState(oldRow, oldCol);
   setLetterStyleAndState(newRow, newCol);
-
-  setDataToLocal();
 }
 
 // 这个函数的目的是为了确保交换的动画效果执行完毕后在执行onEnd函数
 // 因为onEnd函数中更新了列表数据，如果动画效果没有执行完毕，会导致列表数据更新后的动画效果不正确
 function afterAnimation(callback) {
-  requestAnimationFrame(function() {
+  requestAnimationFrame(function () {
     requestAnimationFrame(callback);
   });
 }
@@ -360,7 +371,7 @@ function onEnd(event) {
   if (oldIndex === newIndex) {
     return;
   }
-  remainTimes.value--;
+  remainTimes.value++;
   setTimeout(() => {
     swapShuffledGrid(oldIndex, newIndex);
     if (isComplete()) {
@@ -368,22 +379,15 @@ function onEnd(event) {
       setDataToLocal();
       return;
     }
-    if (remainTimes.value === 0) {
-      win.value = 0;
-      setDataToLocal();
-      return;
-    }
   }, 500);
-  // console.log("onEnd:", event);
 }
 
 onMounted(() => {
-  // correctGrid.value = initData(data);
+  correctGrid.value = initData(data);
   // console.log("letterData-after:", correctGrid.value);
-  // initShuffledGrid();
+  initShuffledGrid();
   // console.log("shuffledGrid-after:", shuffledGrid.value);
-  // initGrid();
-  // Sortable.mount(new Swap());
+  initGrid();
   new Sortable(list.value, {
     swap: true,
     swapClass: "highlight",
@@ -391,7 +395,7 @@ onMounted(() => {
     filter: function (event, item) {
       // console.log("item:", item, "event:", event);
       // console.log(event.target.className);
-      return item.getAttribute("data-state") === "2" || remainTimes.value === 0;
+      return item.getAttribute("data-state") === "2";
     },
     onMove: function (event) {
       // 获取目标元素，即拖动元素想要交换位置的元素
@@ -400,22 +404,22 @@ onMounted(() => {
       // 检查目标元素是否允许交换
       return target.getAttribute("data-state") !== "2";
     },
-    onEnd: function(event) {
-      afterAnimation(function() {
+    onEnd: function (event) {
+      afterAnimation(function () {
         onEnd(event);
-      })}
+      });
+    },
   });
 
   // 刷新页面
 });
 
 useHead({
-  title: "Movixa Arquivo - Jogo Diário de Palavras",
+  title: "Movixa Arquivo - Arquivo de jogos anteriores da mavixo",
   meta: [
     {
       name: "description",
-      content:
-        "",
+      content: "Jogue todos os jogos da mavixo de todas as datas sem limites",
     },
   ],
   link: [

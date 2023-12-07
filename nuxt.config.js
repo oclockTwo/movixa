@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  // plugins: ['~/plugins/sortable.js'],
+  plugins: ['~/plugins/sortable.client.js'],
   modules: [
     "@nuxtjs/tailwindcss",
     "@nuxtjs/google-fonts",

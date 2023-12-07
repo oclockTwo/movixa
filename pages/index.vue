@@ -115,7 +115,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { vAutoAnimate } from "@formkit/auto-animate";
-import { Sortable, Swap } from "sortablejs/modular/sortable.core.esm";
+import { Sortable } from "sortablejs/modular/sortable.core.esm";
 const list = ref(null);
 
 const today = useToday();
@@ -387,7 +387,7 @@ onMounted(() => {
   initShuffledGrid();
   // console.log("shuffledGrid-after:", shuffledGrid.value);
   initGrid();
-  Sortable.mount(new Swap());
+  // Sortable.mount(new Swap());
   new Sortable(list.value, {
     swap: true,
     swapClass: "highlight",

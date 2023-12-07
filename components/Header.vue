@@ -17,6 +17,14 @@
         </svg>
       </button> -->
       <ThemeSwitch class="mt-1" />
+      <button class="btn btn-square btn-ghost">
+        <img
+          class="w-8 h-8 mt-1"
+          src="/icon/heart.png"
+          alt="waffle archive"
+          @click="gotoTwitter"
+        />
+      </button>
     </div>
     <div class="">
       <h1>
@@ -24,17 +32,17 @@
       </h1>
     </div>
     <div class="flex gap-3 justify-center items-center">
-      <!-- <button class="btn btn-square btn-ghost">
+      <button class="btn btn-square btn-ghost">
         <img
-          class="w-9 h-9 mt-1"
+          class="w-8 h-8 mt-1"
           src="/icon/archive.png"
           alt="waffle archive"
           @click="gotoArchive"
         />
-      </button> -->
+      </button>
       <button class="btn btn-square btn-ghost">
         <img
-          class="w-9 h-9"
+          class="w-8 h-8"
           src="/icon/question.png"
           alt="how to play waffle"
           @click="openIntroduction2"
@@ -59,6 +67,10 @@ function openIntroduction2() {
 
 function gotoArchive() {
   router.push('/arquivo');
+}
+
+function gotoTwitter() {
+  window.open("https://twitter.com/compose/tweet?text=Um jogo de adivinhação de palavras que é mais divertido do que o termo: movixa.com");
 }
 
 onMounted(() => {
