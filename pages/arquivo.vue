@@ -3,15 +3,12 @@
     <div
       class="h-screen overflow-auto font-Josefin-sans mx-auto w-full max-w-[728px] shadow-2xl"
     >
-      <Header />
+      <ArchiveHeader />
       <h2
-        class="font-sans text-sm text-center mt-4 text-zinc-400 tracking-widest"
+        class="font-sans text-center mt-4 text-zinc-400 tracking-widest text-4xl"
       >
-        Movixa {{ today }}
+        Movixa Arquivo. Em construção... Fique ligado!
       </h2>
-      <p class="font-sans text-sm text-center mt-2 text-zinc-400">
-        Mova os blocos para a posição correta.
-      </p>
       <div v-auto-animate>
         <div
           class="mt-2 grid grid-cols-5 gap-3 mx-auto px-2"
@@ -59,11 +56,11 @@
           </div>
         </div>
 
-        <div
+        <!-- <div
           class="flex justify-center mt-8 text-4xl tracking-wider text-zinc-400"
         >
           Restam {{ remainTimes }} trocas
-        </div>
+        </div> -->
         <div
           v-if="win === 0"
           class="text-center mt-4 font-bold bg-gray-500 text-white py-2"
@@ -109,7 +106,6 @@
   </main>
   <Introduction />
   <Share class="my-10" />
-  <Faq />
 </template>
 
 <script setup>
@@ -285,7 +281,7 @@ async function copyToClipboard(target) {
 
   try {
     await navigator.clipboard.writeText(
-      `Movixa ${today} ${15-remainTimes.value}/15 \n${colorText}\n jogo movixa`
+      `Movixa Arquivo ${today} \n${colorText}\n jogo movixa`
     );
   } catch (err) {
     console.error("Error in copy: ", err);
@@ -313,7 +309,7 @@ function initShuffledGrid() {
     localData = JSON.parse(localStorage.getItem("gameData"));
   }
   if (localData && localData[today] && localData[today].shuffledGrid) {
-    // console.log("gameData:", localData, "game data today:", localData[today]);
+    console.log("gameData:", localData, "game data today:", localData[today]);
     shuffledGrid.value = localData[today].shuffledGrid;
     remainTimes.value = localData[today].remainTimes;
     win.value = localData[today].win;
@@ -382,12 +378,12 @@ function onEnd(event) {
 }
 
 onMounted(() => {
-  correctGrid.value = initData(data);
+  // correctGrid.value = initData(data);
   // console.log("letterData-after:", correctGrid.value);
-  initShuffledGrid();
+  // initShuffledGrid();
   // console.log("shuffledGrid-after:", shuffledGrid.value);
-  initGrid();
-  Sortable.mount(new Swap());
+  // initGrid();
+  // Sortable.mount(new Swap());
   new Sortable(list.value, {
     swap: true,
     swapClass: "highlight",
@@ -409,21 +405,23 @@ onMounted(() => {
         onEnd(event);
       })}
   });
+
+  // 刷新页面
 });
 
 useHead({
-  title: "Movixa - Jogo Diário de Palavras",
+  title: "Movixa Arquivo - Jogo Diário de Palavras",
   meta: [
     {
       name: "description",
       content:
-        "Um jogo de adivinhação de palavras onde você combina palavras movendo letras",
+        "",
     },
   ],
   link: [
     {
       rel: "canonical",
-      href: "https://movixa.com",
+      href: "https://movixa.com/arquivo",
     },
     {
       rel: "icon",

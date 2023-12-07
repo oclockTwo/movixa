@@ -20,24 +20,24 @@
     </div>
     <div class="">
       <h1>
-        <a href="/" class="btn btn-ghost text-xl">Movixa</a>
+        <a href="/arquivo" class="btn btn-ghost text-xl">Movixa Arquivo</a>
       </h1>
     </div>
     <div class="flex gap-3 justify-center items-center">
-      <!-- <button class="btn btn-square btn-ghost">
+      <button class="btn btn-square btn-ghost">
         <img
-          class="w-9 h-9 mt-1"
-          src="/icon/archive.png"
-          alt="waffle archive"
-          @click="gotoArchive"
+          class="w-9 h-9"
+          src="/icon/house.png"
+          alt="waffle"
+          @click="gotoHome"
         />
-      </button> -->
+      </button>
       <button class="btn btn-square btn-ghost">
         <img
           class="w-9 h-9"
           src="/icon/question.png"
           alt="how to play waffle"
-          @click="openIntroduction2"
+          @click="openIntroduction3"
         />
       </button>
     </div>
@@ -50,20 +50,17 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter();
 
-function openIntroduction2() {
+function openIntroduction3() {
   const modal = document.getElementById("my_modal_2");
   if (modal && modal.showModal) {
     modal.showModal();
   }
 }
 
-function gotoArchive() {
-  router.push('/arquivo');
+function gotoHome() {
+  router.push('/');
 }
 
-onMounted(() => {
-  openIntroduction2();
-});
 </script>
 
 <style scoped>
