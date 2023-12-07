@@ -285,7 +285,7 @@ async function copyToClipboard(target) {
 
   try {
     await navigator.clipboard.writeText(
-      `Movixa ${today} ${15-remainTimes.value}/20 \n${colorText}\n jogo movixa`
+      `Movixa ${today} ${20-remainTimes.value}/20 \n${colorText}\n jogo movixa`
     );
   } catch (err) {
     console.error("Error in copy: ", err);
