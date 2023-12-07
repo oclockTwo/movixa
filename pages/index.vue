@@ -340,14 +340,29 @@ function swapShuffledGrid(oldIndex, newIndex) {
   const newRow = Math.floor(newIndex / 5);
   const newCol = newIndex % 5;
 
+  console.log("oldIndex:", oldIndex, "newIndex:", newIndex);
+  console.log("oldRow:", oldRow, "oldCol:", oldCol, "newRow:", newRow, "newCol:", newCol);
+
+  console.log("shuffled-before:", shuffledGrid.value);
+
   const temp = shuffledGrid.value[oldRow][oldCol];
   shuffledGrid.value[oldRow][oldCol] = shuffledGrid.value[newRow][newCol];
   shuffledGrid.value[newRow][newCol] = temp;
+
+  console.log("shuffled-after:", shuffledGrid.value);
 
   setLetterStyleAndState(oldRow, oldCol);
   setLetterStyleAndState(newRow, newCol);
 
   setDataToLocal();
+}
+
+// 这个函数的目的是为了确保交换的动画效果执行完毕后在执行onEnd函数
+// 因为onEnd函数中更新了列表数据，如果动画效果没有执行完毕，会导致列表数据更新后的动画效果不正确
+function afterAnimation(callback) {
+  requestAnimationFrame(function() {
+    requestAnimationFrame(callback);
+  });
 }
 
 function onEnd(event) {
@@ -369,7 +384,7 @@ function onEnd(event) {
       setDataToLocal();
       return;
     }
-  }, 550);
+  }, 500);
   // console.log("onEnd:", event);
 }
 
@@ -396,7 +411,10 @@ onMounted(() => {
       // 检查目标元素是否允许交换
       return target.getAttribute("data-state") !== "2";
     },
-    onEnd: onEnd,
+    onEnd: function(event) {
+      afterAnimation(function() {
+        onEnd(event);
+      })}
   });
 });
 
