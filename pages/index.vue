@@ -124,7 +124,7 @@ const shuffledGrid = ref([]);
 const { data } = await useAsyncData(() => queryContent("/data").findOne());
 const state = ref(0);
 const win = ref(-1);
-const remainTimes = ref(20);
+const remainTimes = ref(15);
 
 function initData(data) {
   let result = [];
@@ -285,7 +285,7 @@ async function copyToClipboard(target) {
 
   try {
     await navigator.clipboard.writeText(
-      `Movixa ${today} ${20-remainTimes.value}/20 \n${colorText}\n jogo movixa`
+      `Movixa ${today} ${15-remainTimes.value}/15 \n${colorText}\n jogo movixa`
     );
   } catch (err) {
     console.error("Error in copy: ", err);
