@@ -64,7 +64,7 @@
         >
           Restam {{ remainTimes }} trocas
         </div>
-        <p class="flex justify-center text-sm text-zinc-400">Clique no canto superior direito para jogar os jogos anteriores</p>
+        <p class="flex justify-center text-sm text-zinc-400 text-center">Clique no canto superior direito para jogar os jogos anteriores</p>
         <div
           v-if="win === 0"
           class="text-center mt-4 font-bold bg-gray-500 text-white py-2"
