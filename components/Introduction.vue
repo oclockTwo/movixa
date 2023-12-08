@@ -3,13 +3,14 @@
     <dialog id="my_modal_2" class="modal">
       <div class="modal-box bg-gray-200 Lato">
         <h2 class="font-bold text-lg text-center">como jogar?</h2>
-        <p class="m-3 select-none leading-6 text-zinc-900 ">
+        <p class="m-3 select-none leading-6 text-zinc-900">
           Mova os blocos para a posição correta.<br />
           <br />
-          Rearranje as letras para formar as palavras corretas, horizontal e
-          verticalmente. Arraste as letras para qualquer lugar no tabuleiro. As
-          letras mudarão de cor para mostrar se estão na posição correta. O
-          número de movimentos restantes é exibido abaixo do tabuleiro.<br />
+          Há um total de 6 palavras, 5 letras por palavra, distribuídas em cada
+          linha e coluna. Você precisa mover as letras para a posição correta
+          para formar uma palavra correta. As letras verdes indicam que a
+          posição da letra está correta.
+          <br />
         </p>
         <hr />
         <div class="flex">
@@ -37,7 +38,7 @@
           vertical contém esta letra ou a palavra horizontal.
         </p>
         <hr />
-        <h3
+        <!-- <h3
           class="m-3 text-xl font-bold tracking-wider text-center text-gray-900 uppercase select-none"
         >
           special case
@@ -69,7 +70,7 @@
             alt="movixa jogo 4"
           />
         </div>
-        <hr />
+        <hr /> -->
         <p class="m-3 text-xs leading-6 select-none text-zinc-400">
           criado por
           <a
@@ -81,7 +82,7 @@
         </p>
         <div class="modal-action">
           <form method="dialog">
-            <button class="btn">Fechar</button>
+            <button class="btn btn-active btn-accent">Fechar</button>
           </form>
         </div>
       </div>

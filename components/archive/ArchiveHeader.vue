@@ -16,7 +16,7 @@
           ></path>
         </svg>
       </button> -->
-      <ThemeSwitch class="mt-1" />
+      <ThemeSwitch class="mt-2" />
       <button class="btn btn-square btn-ghost">
         <img
           class="w-8 h-8 mt-1"
