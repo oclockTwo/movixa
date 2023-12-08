@@ -10,7 +10,9 @@
         Movixa {{ today }}
       </h2>
       <p class="font-sans text-sm text-center mt-2 text-zinc-400">
-        Mova os blocos para a posição correta.
+        Aviso gentil: Se você encontrar algum problema com o posicionamento das
+        células, por favor, atualize a página. Estamos trabalhando para resolver
+        este problema...
       </p>
       <div v-auto-animate>
         <div
@@ -64,7 +66,9 @@
         >
           Restam {{ remainTimes }} trocas
         </div>
-        <p class="flex justify-center text-sm text-zinc-400 text-center">Clique no canto superior direito para jogar os jogos anteriores</p>
+        <p class="flex justify-center text-sm text-zinc-400 text-center">
+          Clique no canto superior direito para jogar os jogos anteriores
+        </p>
         <div
           v-if="win === 0"
           class="text-center mt-4 font-bold bg-gray-500 text-white py-2"
@@ -286,7 +290,9 @@ async function copyToClipboard(target) {
 
   try {
     await navigator.clipboard.writeText(
-      `Movixa ${today} ${15-remainTimes.value}/15 \n${colorText}\n jogo movixa`
+      `Movixa ${today} ${
+        15 - remainTimes.value
+      }/15 \n${colorText}\n jogo movixa`
     );
   } catch (err) {
     console.error("Error in copy: ", err);
@@ -354,7 +360,7 @@ function swapShuffledGrid(oldIndex, newIndex) {
 // 这个函数的目的是为了确保交换的动画效果执行完毕后在执行onEnd函数
 // 因为onEnd函数中更新了列表数据，如果动画效果没有执行完毕，会导致列表数据更新后的动画效果不正确
 function afterAnimation(callback) {
-  requestAnimationFrame(function() {
+  requestAnimationFrame(function () {
     requestAnimationFrame(callback);
   });
 }
@@ -405,10 +411,11 @@ onMounted(() => {
       // 检查目标元素是否允许交换
       return target.getAttribute("data-state") !== "2";
     },
-    onEnd: function(event) {
-      afterAnimation(function() {
+    onEnd: function (event) {
+      afterAnimation(function () {
         onEnd(event);
-      })}
+      });
+    },
   });
 });
 
