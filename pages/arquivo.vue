@@ -23,51 +23,38 @@
       </div>
       <div v-auto-animate>
         <div
-          class="mt-2 grid grid-cols-5 gap-3 mx-auto px-2"
-          style="width: 100%; max-width: 420px"
-          ref="list"
+          class="mt-6 flex flex-col gap-3 mx-auto"
+          style="width: 100%; max-width: 450px"
         >
           <div
-            v-for="item of shuffledGrid[0]"
-            :key="item.id"
-            :data-state="item.state"
+            v-for="(items, rowIndex) of shuffledGrid"
+            :key="rowIndex"
+            class="flex justify-between w-full"
+            v-auto-animate
           >
-            <p :class="item.style">{{ item.letter }}</p>
-          </div>
-          <div
-            v-for="item of shuffledGrid[1]"
-            :key="item.id"
-            :data-state="item.state"
-          >
-            <p :class="item.style" v-if="item.letter !== ' '">
-              {{ item.letter }}
-            </p>
-          </div>
-          <div
-            v-for="item of shuffledGrid[2]"
-            :key="item.id"
-            :data-state="item.state"
-          >
-            <p :class="item.style">{{ item.letter }}</p>
-          </div>
-          <div
-            v-for="item of shuffledGrid[3]"
-            :key="item.id"
-            :data-state="item.state"
-          >
-            <p :class="item.style" v-if="item.letter !== ' '">
-              {{ item.letter }}
-            </p>
-          </div>
-          <div
-            v-for="item of shuffledGrid[4]"
-            :key="item.id"
-            :data-state="item.state"
-          >
-            <p :class="item.style">{{ item.letter }}</p>
+            <div
+              v-for="(item, colIndex) of items"
+              :key="item.id"
+              :draggable="item.state === 2 || item.state === -1 ? false : true"
+              @dragover.prevent
+              @dragstart="dragStart($event, rowIndex, colIndex)"
+              @drop="drop(rowIndex, colIndex)"
+              @dragleave="dragLeave(rowIndex, colIndex)"
+              @touchstart="touchStart($event, rowIndex, colIndex)"
+              @touchmove="touchMove($event, rowIndex, colIndex)"
+              @touchend="touchEnd($event, rowIndex, colIndex)"
+            >
+              <p
+                :id="`${rowIndex}-${colIndex}`"
+                v-if="item.letter !== ' '"
+                :class="item.style"
+                class="w-[70px] h-16 custom:h-20 custom:w-[84px]"
+              >
+                {{ item.letter }}
+              </p>
+            </div>
           </div>
         </div>
-
         <div
           class="flex justify-center mt-8 text-4xl tracking-wider text-zinc-400"
         >
@@ -121,15 +108,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, nextTick } from "vue";
 import { vAutoAnimate } from "@formkit/auto-animate";
-import { Sortable } from "sortablejs/modular/sortable.core.esm";
 import { useRoute } from "vue-router";
 const route = useRoute();
-const list = ref(null);
 let queryParams = route.query;
 
-const today = useToday();
 const correctGrid = ref([]);
 const shuffledGrid = ref([]);
 const { data } = await useAsyncData(() => queryContent("/data").findOne());
@@ -188,6 +172,110 @@ function formateData(data) {
     }
   }
   return result;
+}
+
+// 拖动元素
+let draggedItem = null;
+
+function dragStart(event, rowIndex, colIndex) {
+  event.dataTransfer.effectAllowed = "move";
+  draggedItem = { rowIndex, colIndex };
+  console.log("dragStart:", rowIndex, colIndex);
+}
+
+function drop(targetRowIndex, targetColIndex) {
+  console.log("drop:", targetRowIndex, targetColIndex);
+  if (shuffledGrid.value[targetRowIndex][targetColIndex].state === 2) return;
+  if (
+    draggedItem.rowIndex === targetRowIndex &&
+    draggedItem.colIndex === targetColIndex
+  )
+    return;
+  if (!draggedItem) return;
+
+  // 交换数据
+  [
+    shuffledGrid.value[targetRowIndex][targetColIndex],
+    shuffledGrid.value[draggedItem.rowIndex][draggedItem.colIndex],
+  ] = [
+    shuffledGrid.value[draggedItem.rowIndex][draggedItem.colIndex],
+    shuffledGrid.value[targetRowIndex][targetColIndex],
+  ];
+
+  setLetterStyleAndState(draggedItem.rowIndex, draggedItem.colIndex);
+  setLetterStyleAndState(targetRowIndex, targetColIndex);
+
+  remainTimes.value++;
+  if (isComplete()) {
+    win.value = 1;
+    return;
+  }
+
+  draggedItem = null;
+}
+
+function dragLeave(rowIndex, colIndex) {
+  // 可以添加一些拖拽离开的处理逻辑
+}
+
+// 手机滑动元素
+let movedItem = null;
+
+function touchStart(event, rowIndex, colIndex) {
+  // 处理触摸开始
+  console.log("touchStart:", rowIndex, colIndex)
+  movedItem = { rowIndex, colIndex };
+  if (shuffledGrid.value[rowIndex][colIndex].state === 2) {
+    // event.preventDefault();
+  }
+}
+
+function touchMove(event, rowIndex, colIndex) {
+  event.preventDefault();
+}
+
+function touchEnd(event, rowIndex, colIndex) {
+  // 处理触摸结束
+  if (movedItem === null) return;
+  let touch = event.changedTouches[0];
+  let targetIndex = findDivAt(touch.clientX, touch.clientY);
+  console.log("touchEnd:", rowIndex, colIndex, targetIndex);
+
+  if (shuffledGrid.value[targetIndex[0]][targetIndex[1]].state === 2) return;
+  if (shuffledGrid.value[rowIndex][colIndex].state === 2) return;
+  if (rowIndex === targetIndex[0] && colIndex === targetIndex[1]) return;
+  if (!movedItem) return;
+
+  // 交换数据
+  [
+    shuffledGrid.value[rowIndex][colIndex],
+    shuffledGrid.value[targetIndex[0]][targetIndex[1]],
+  ] = [
+    shuffledGrid.value[targetIndex[0]][targetIndex[1]],
+    shuffledGrid.value[rowIndex][colIndex],
+  ];
+
+  setLetterStyleAndState(rowIndex, colIndex);
+  setLetterStyleAndState(targetIndex[0], targetIndex[1]);
+
+  remainTimes.value++;
+  if (isComplete()) {
+    win.value = 1;
+    return;
+  }
+}
+
+function findDivAt(x, y) {
+  const element = document.elementFromPoint(x, y);
+  // console.log("element:", element);
+  if (element && isTwoDigitId(element.id)) {
+    return element.id.split("-").map(Number);
+  }
+  return null;
+}
+
+function isTwoDigitId(id) {
+  return /^\d+-\d+$/.test(id);
 }
 
 function setLetterStyleAndState(row, col) {
@@ -344,77 +432,15 @@ function initShuffledGrid() {
   shuffledGrid.value = arr;
 }
 
-function swapShuffledGrid(oldIndex, newIndex) {
-  const oldRow = Math.floor(oldIndex / 5);
-  const oldCol = oldIndex % 5;
-  const newRow = Math.floor(newIndex / 5);
-  const newCol = newIndex % 5;
-
-  const temp = shuffledGrid.value[oldRow][oldCol];
-  shuffledGrid.value[oldRow][oldCol] = shuffledGrid.value[newRow][newCol];
-  shuffledGrid.value[newRow][newCol] = temp;
-
-  setLetterStyleAndState(oldRow, oldCol);
-  setLetterStyleAndState(newRow, newCol);
-}
-
-// 这个函数的目的是为了确保交换的动画效果执行完毕后在执行onEnd函数
-// 因为onEnd函数中更新了列表数据，如果动画效果没有执行完毕，会导致列表数据更新后的动画效果不正确
-function afterAnimation(callback) {
-  requestAnimationFrame(function () {
-    requestAnimationFrame(callback);
-  });
-}
-
-function onEnd(event) {
-  const oldIndex = event.oldIndex;
-  const newIndex = event.newIndex;
-  if (oldIndex === newIndex) {
-    return;
-  }
-  remainTimes.value++;
-  setTimeout(() => {
-    swapShuffledGrid(oldIndex, newIndex);
-    if (isComplete()) {
-      win.value = 1;
-      setDataToLocal();
-      return;
-    }
-  }, 800);
-}
-
 onMounted(() => {
-  if(!queryParams || !queryParams.date) {
-    queryParams.date = '4/12/2023';
+  if (!queryParams || !queryParams.date) {
+    queryParams.date = "4/12/2023";
   }
   correctGrid.value = initData(data);
   // console.log("letterData-after:", correctGrid.value);
   initShuffledGrid();
   // console.log("shuffledGrid-after:", shuffledGrid.value);
   initGrid();
-  new Sortable(list.value, {
-    swap: true,
-    swapClass: "highlight",
-    animation: 500,
-    filter: function (event, item) {
-      // console.log("item:", item, "event:", event);
-      // console.log(event.target.className);
-      return item.getAttribute("data-state") === "2";
-    },
-    onMove: function (event) {
-      // 获取目标元素，即拖动元素想要交换位置的元素
-      let target = event.related;
-      // console.log("target:", target, "event:", event);
-      // 检查目标元素是否允许交换
-      return target.getAttribute("data-state") !== "2";
-    },
-    onEnd: function (event) {
-      afterAnimation(function () {
-        onEnd(event);
-      });
-    },
-  });
-
   // 刷新页面
 });
 
