@@ -4,7 +4,8 @@ export default {
   theme: {
     extend: {
       screens: {
-        'custom': '450px',
+        'custom': '420px',
+        'custommini': '380px'
       },
       colors: {
         "main": "#fffaf4",

@@ -180,11 +180,11 @@ let draggedItem = null;
 function dragStart(event, rowIndex, colIndex) {
   event.dataTransfer.effectAllowed = "move";
   draggedItem = { rowIndex, colIndex };
-  console.log("dragStart:", rowIndex, colIndex);
+  // console.log("dragStart:", rowIndex, colIndex);
 }
 
 function drop(targetRowIndex, targetColIndex) {
-  console.log("drop:", targetRowIndex, targetColIndex);
+  // console.log("drop:", targetRowIndex, targetColIndex);
   if (shuffledGrid.value[targetRowIndex][targetColIndex].state === 2) return;
   if (
     draggedItem.rowIndex === targetRowIndex &&
@@ -220,26 +220,51 @@ function dragLeave(rowIndex, colIndex) {
 
 // 手机滑动元素
 let movedItem = null;
+// 初始化变量来保存初始触摸位置
+let movableDiv = null;
+let clone = null;
 
 function touchStart(event, rowIndex, colIndex) {
   // 处理触摸开始
-  console.log("touchStart:", rowIndex, colIndex)
+  // console.log("touchStart:", rowIndex, colIndex);
   movedItem = { rowIndex, colIndex };
   if (shuffledGrid.value[rowIndex][colIndex].state === 2) {
-    // event.preventDefault();
+    return;
   }
+
+  movableDiv = document.getElementById(`${rowIndex}-${colIndex}`);
+  clone = movableDiv.cloneNode(true);
+  clone.style.opacity = "0.9";
+  clone.style.position = "absolute";
+  document.body.appendChild(clone);
+  updateClonePosition(event.touches[0], clone);
 }
 
 function touchMove(event, rowIndex, colIndex) {
   event.preventDefault();
+  if (clone) {
+    updateClonePosition(event.touches[0], clone);
+  }
+}
+
+function updateClonePosition(touch, cloneElement) {
+  const x = touch.clientX - cloneElement.offsetWidth / 2;
+  const y = touch.clientY - cloneElement.offsetHeight / 2;
+  cloneElement.style.left = x + "px";
+  cloneElement.style.top = y + "px";
 }
 
 function touchEnd(event, rowIndex, colIndex) {
+  if (clone) {
+    document.body.removeChild(clone);
+    clone = null;
+  }
   // 处理触摸结束
   if (movedItem === null) return;
   let touch = event.changedTouches[0];
   let targetIndex = findDivAt(touch.clientX, touch.clientY);
-  console.log("touchEnd:", rowIndex, colIndex, targetIndex);
+  if(targetIndex === null) return;
+  // console.log("touchEnd:", rowIndex, colIndex, targetIndex);
 
   if (shuffledGrid.value[targetIndex[0]][targetIndex[1]].state === 2) return;
   if (shuffledGrid.value[rowIndex][colIndex].state === 2) return;
