@@ -255,10 +255,10 @@ function updateClonePosition(touch, cloneElement) {
 }
 
 function touchEnd(event, rowIndex, colIndex) {
-  if (clone) {
+  // if (clone) {
     document.body.removeChild(clone);
     clone = null;
-  }
+  // }
   // 处理触摸结束
   if (movedItem === null) return;
   let touch = event.changedTouches[0];
