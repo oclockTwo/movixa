@@ -9,11 +9,6 @@
       >
         Movixa {{ today }}
       </h2>
-      <p class="font-sans text-sm text-center mt-2 text-zinc-400">
-        O problema de desorganização das células foi resolvido, mas atualmente
-        não há efeito de animação ao mover as células no dispositivo móvel, e
-        estamos trabalhando para solucionar isso...
-      </p>
       <div v-auto-animate>
         <div
           class="mt-6 flex flex-col gap-3 mx-auto"
