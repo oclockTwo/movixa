@@ -17,7 +17,7 @@
           <div
             v-for="(items, rowIndex) of shuffledGrid"
             :key="rowIndex"
-            class="flex justify-between w-full"
+            class="flex justify-between w-full px-2"
             v-auto-animate
           >
             <div
