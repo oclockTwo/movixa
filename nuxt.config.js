@@ -46,6 +46,11 @@ export default defineNuxtConfig({
           src: "https://us.umami.is/script.js",
         },
         {
+          defer: true,
+          "data-domain": "movixa.com",
+          src: "https://plausible.io/js/plausible.js",
+        },
+        {
           async: true,
           src: "https://www.googletagmanager.com/gtag/js?id=G-J950DBPM75",
         },
