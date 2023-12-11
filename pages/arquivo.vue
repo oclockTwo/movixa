@@ -109,7 +109,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick } from "vue";
+import { ref, onMounted } from "vue";
 import { vAutoAnimate } from "@formkit/auto-animate";
 import { useRoute } from "vue-router";
 const route = useRoute();

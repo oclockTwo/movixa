@@ -18,12 +18,16 @@
       </button> -->
       <ThemeSwitch class="mt-2" />
       <button class="btn btn-square btn-ghost">
-        <img
-          class="w-8 h-8 mt-1"
-          src="/icon/heart.png"
-          alt="waffle archive"
-          @click="gotoTwitter"
-        />
+        <a
+          href="https://twitter.com/compose/tweet?text=Um jogo de adivinhação de palavras que é mais divertido do que o termo: movixa.com"
+          target="_blank"
+        >
+          <img
+            class="w-8 h-8 mt-1"
+            src="/icon/heart.png"
+            alt="movixa arquivo"
+          />
+        </a>
       </button>
     </div>
     <div class="">
@@ -44,7 +48,7 @@
         <img
           class="w-8 h-8"
           src="/icon/question.png"
-          alt="how to play waffle"
+          alt="how to play movixa"
           @click="openIntroduction2"
         />
       </button>
@@ -54,7 +58,7 @@
 
 <script setup>
 import { onMounted } from "vue";
-import { useRouter } from 'vue-router';
+import { useRouter } from "vue-router";
 
 const router = useRouter();
 
@@ -67,10 +71,12 @@ function openIntroduction2() {
 
 function gotoArchive() {
   router.push('/arquivo');
+  // window.location.href = `https://movixa.com/arquivo`;
 }
 
 function gotoTwitter() {
-  window.open("https://twitter.com/compose/tweet?text=Um jogo de adivinhação de palavras que é mais divertido do que o termo: movixa.com");
+  // window.open("https://twitter.com/compose/tweet?text=Um jogo de adivinhação de palavras que é mais divertido do que o termo: movixa.com");
+  window.location.href = `https://twitter.com/compose/tweet?text=Um jogo de adivinhação de palavras que é mais divertido do que o termo: movixa.com`;
 }
 
 onMounted(() => {
