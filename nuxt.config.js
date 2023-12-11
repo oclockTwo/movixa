@@ -41,9 +41,9 @@ export default defineNuxtConfig({
       ],
       script: [
         {
-          defer: true,
-          "data-domain": "movixa.com",
-          src: "https://plausible.io/js/script.js",
+          async: true,
+          "data-website-id": "70b74afb-f994-4d37-b6a5-a18e91743883",
+          src: "https://us.umami.is/script.js",
         },
         {
           async: true,
