@@ -2,7 +2,7 @@
   <div>
     <dialog id="my_modal_2" class="modal">
       <div class="modal-box bg-gray-200 Lato">
-        <h2 class="font-bold text-lg text-center">como jogar?</h2>
+        <h2 class="font-bold text-lg text-center text-black">como jogar?</h2>
         <p class="m-3 select-none leading-6 text-zinc-900">
           Mova os blocos para a posição correta.<br />
           <br />
@@ -12,7 +12,7 @@
           posição da letra está correta.
           <br />
         </p>
-        <hr />
+        <hr class="border-black border-1 my-2" />
         <div class="flex">
           <img
             src="/images/example1.png"
@@ -25,7 +25,7 @@
           <b>E</b> estão nesta linha, mas não nas posições corretas; as letras
           <b>N</b> e <b>M</b> não estão nesta linha.
         </p>
-        <hr />
+        <hr class="border-black border-1 my-2" />
         <div class="flex">
           <img
             src="/images/example3.png"
@@ -37,7 +37,10 @@
           letra <b>E</b>, Esta letra está em um canto, então ou a palavra
           vertical contém esta letra ou a palavra horizontal.
         </p>
-        <hr />
+        <hr class="border-black border-1 my-2" />
+        <p class="m-3 select-none leading-6 text-zinc-900">
+          <b>(Se você receber um erro, tente atualizar a página!)</b>
+        </p>
         <!-- <h3
           class="m-3 text-xl font-bold tracking-wider text-center text-gray-900 uppercase select-none"
         >
