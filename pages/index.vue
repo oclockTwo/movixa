@@ -97,6 +97,7 @@
   <Introduction />
   <Share class="my-10" />
   <Faq />
+  <Footer />
 </template>
 
 <script setup>

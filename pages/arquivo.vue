@@ -105,6 +105,7 @@
   </main>
   <Introduction />
   <Share class="my-10" />
+  <Footer />
 </template>
 
 <script setup>
