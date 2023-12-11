@@ -29,7 +29,7 @@
           <div
             v-for="(items, rowIndex) of shuffledGrid"
             :key="rowIndex"
-            class="flex justify-between w-full"
+            class="flex justify-between w-full px-2"
             v-auto-animate
           >
             <div
@@ -48,7 +48,7 @@
                 :id="`${rowIndex}-${colIndex}`"
                 v-if="item.letter !== ' '"
                 :class="item.style"
-                class="w-[70px] h-16 custom:h-20 custom:w-[84px]"
+                class="w-[60px] h-14 custommid:w-[70px] custommid:h-16 custom:h-20 custom:w-[80px]"
               >
                 {{ item.letter }}
               </p>
@@ -228,7 +228,7 @@ function touchStart(event, rowIndex, colIndex) {
   // 处理触摸开始
   // console.log("touchStart:", rowIndex, colIndex);
   movedItem = { rowIndex, colIndex };
-  if (shuffledGrid.value[rowIndex][colIndex].state === 2) {
+  if (shuffledGrid.value[rowIndex][colIndex].state === 2 || win.value !== -1) {
     return;
   }
 
@@ -242,6 +242,7 @@ function touchStart(event, rowIndex, colIndex) {
 
 function touchMove(event, rowIndex, colIndex) {
   event.preventDefault();
+  if(shuffledGrid.value[rowIndex][colIndex].state === 2 || win.value !== -1) return;
   if (clone) {
     updateClonePosition(event.touches[0], clone);
   }
@@ -255,10 +256,10 @@ function updateClonePosition(touch, cloneElement) {
 }
 
 function touchEnd(event, rowIndex, colIndex) {
-  // if (clone) {
+  if (clone) {
     document.body.removeChild(clone);
     clone = null;
-  // }
+  }
   // 处理触摸结束
   if (movedItem === null) return;
   let touch = event.changedTouches[0];
