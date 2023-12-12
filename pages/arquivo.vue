@@ -437,7 +437,7 @@ async function copyToClipboard(target) {
 
   try {
     await navigator.clipboard.writeText(
-      `Movixa Arquivo ${remainTimes.value} trocas \n${colorText}\n jogo movixa`
+      `Movixa Arquivo ${remainTimes.value} trocas \n${colorText}\n movixa.com`
     );
   } catch (err) {
     console.error("Error in copy: ", err);
