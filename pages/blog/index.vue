@@ -62,7 +62,7 @@ useHead({
   meta: [
     {
       name: "description",
-      content: "",
+      content: "Navegue aqui por toda a coleção de blogs do movixa.",
     },
   ],
   link: [

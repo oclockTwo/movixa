@@ -123,7 +123,7 @@ useHead({
   meta: [
     {
       name: "description",
-      content: "",
+      content: "Resposta e dicas do jogo movixa de 1 de janeiro de 2024.",
     },
   ],
   link: [
