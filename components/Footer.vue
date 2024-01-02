@@ -18,6 +18,26 @@
         >Privacy Policy</a
       ></span
     >
+    <span class="leading-5 text-slate-400"
+      ><span class="mx-2 text-center text-slate-500">|</span
+      ><a
+        target="_blank"
+        class="inline-block cursor-pointer text-center"
+        xt-marked="ok"
+        href="/blog"
+        >blog</a
+      ></span
+    >
+    <span class="leading-5 text-slate-400"
+      ><span class="mx-2 text-center text-slate-500">|</span
+      ><a
+        target="_blank"
+        class="inline-block cursor-pointer text-center"
+        xt-marked="ok"
+        href="/"
+        >início</a
+      ></span
+    >
   </div>
   <div>
     <div class="text-sm leading-6 text-center text-neutral-800">
