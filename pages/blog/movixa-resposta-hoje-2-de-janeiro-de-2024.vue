@@ -1,20 +1,20 @@
 <template>
   <div class="overflow-auto mx-auto w-full max-w-[728px]">
     <div
-      class="flex flex-row items-center gap-2 border-0 border-solid border-stone-200 text-sm font-semibold leading-tight text-black"
+      class="border-solid border-stone-200 text-sm font-semibold leading-tight text-black my-10"
     >
       <a
-        class="cursor-pointer border-0 border-solid border-stone-200 font-semibold leading-4"
+        class="cursor-pointer border-solid border-stone-200 font-semibold leading-4"
         href="/"
         >Início -></a
       >
       <a
-        class="block cursor-pointer border-0 border-solid border-stone-200 font-semibold leading-4"
+        class="block cursor-pointer border-solid border-stone-200 font-semibold leading-4"
         href="/blog"
         >Blog -></a
       >
       <a
-        class="block cursor-pointer border-0 border-solid border-stone-200 font-semibold leading-4"
+        class="block cursor-pointer border-solid border-stone-200 font-semibold leading-4"
         >movixa-resposta-hoje-2-de-janeiro-de-2024</a
       >
     </div>
