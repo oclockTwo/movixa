@@ -42,8 +42,8 @@ export default defineNuxtConfig({
       script: [
         {
           async: true,
-          "data-website-id": "70b74afb-f994-4d37-b6a5-a18e91743883",
-          src: "https://us.umami.is/script.js",
+          "data-website-id": "df7923f8-c759-4736-9b7d-b57f42d69b5d",
+          src: "https://umami-six-theta.vercel.app/script.js",
         },
         {
           defer: true,
