@@ -9,6 +9,9 @@
       >
         Movixa {{ today }}
       </h2>
+      <ClientOnly>
+        <AdsenseRow />
+      </ClientOnly>
       <div v-auto-animate>
         <div
           class="mt-6 flex flex-col gap-3 mx-auto"
@@ -43,6 +46,9 @@
             </div>
           </div>
         </div>
+        <ClientOnly>
+          <AdsenseRow class="mt-4" />
+        </ClientOnly>
         <div
           class="flex justify-center mt-8 text-4xl tracking-wider text-zinc-400"
         >
@@ -93,6 +99,9 @@
         </div>
       </div>
     </div>
+    <ClientOnly>
+      <AdsenseRow />
+    </ClientOnly>
   </main>
   <Introduction />
   <Share class="my-10" />
@@ -197,7 +206,10 @@ function touchStart(event, rowIndex, colIndex) {
   // 处理触摸开始
   // console.log("touchStart:", rowIndex, colIndex)
   movedItem = { rowIndex, colIndex };
-  if (shuffledGrid.value[rowIndex][colIndex].state === 2 || remainTimes.value === 0) {
+  if (
+    shuffledGrid.value[rowIndex][colIndex].state === 2 ||
+    remainTimes.value === 0
+  ) {
     return;
   }
 
@@ -211,7 +223,11 @@ function touchStart(event, rowIndex, colIndex) {
 
 function touchMove(event, rowIndex, colIndex) {
   event.preventDefault();
-  if(shuffledGrid.value[rowIndex][colIndex].state === 2 || remainTimes.value === 0) return;
+  if (
+    shuffledGrid.value[rowIndex][colIndex].state === 2 ||
+    remainTimes.value === 0
+  )
+    return;
   if (clone) {
     updateClonePosition(event.touches[0], clone);
   }
@@ -233,7 +249,7 @@ function touchEnd(event, rowIndex, colIndex) {
   if (movedItem === null) return;
   let touch = event.changedTouches[0];
   let targetIndex = findDivAt(touch.clientX, touch.clientY);
-  if(targetIndex === null) return;
+  if (targetIndex === null) return;
 
   if (shuffledGrid.value[targetIndex[0]][targetIndex[1]].state === 2) return;
   if (shuffledGrid.value[rowIndex][colIndex].state === 2) return;
