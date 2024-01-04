@@ -21,6 +21,9 @@
           </ul>
         </details>
       </div>
+      <ClientOnly>
+        <AdsenseRow />
+      </ClientOnly>
       <div v-auto-animate>
         <div
           class="mt-6 flex flex-col gap-3 mx-auto"
@@ -60,6 +63,9 @@
         >
           {{ remainTimes }} trocas
         </div>
+        <ClientOnly>
+          <AdsenseRow />
+        </ClientOnly>
         <div
           v-if="win === 0"
           class="text-center mt-4 font-bold bg-gray-500 text-white py-2"
@@ -102,6 +108,9 @@
         </div>
       </div>
     </div>
+    <ClientOnly>
+      <AdsenseRow />
+    </ClientOnly>
   </main>
   <Introduction />
   <Share class="my-10" />
@@ -243,7 +252,8 @@ function touchStart(event, rowIndex, colIndex) {
 
 function touchMove(event, rowIndex, colIndex) {
   event.preventDefault();
-  if(shuffledGrid.value[rowIndex][colIndex].state === 2 || win.value !== -1) return;
+  if (shuffledGrid.value[rowIndex][colIndex].state === 2 || win.value !== -1)
+    return;
   if (clone) {
     updateClonePosition(event.touches[0], clone);
   }
@@ -265,7 +275,7 @@ function touchEnd(event, rowIndex, colIndex) {
   if (movedItem === null) return;
   let touch = event.changedTouches[0];
   let targetIndex = findDivAt(touch.clientX, touch.clientY);
-  if(targetIndex === null) return;
+  if (targetIndex === null) return;
   // console.log("touchEnd:", rowIndex, colIndex, targetIndex);
 
   if (shuffledGrid.value[targetIndex[0]][targetIndex[1]].state === 2) return;
