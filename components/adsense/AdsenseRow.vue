@@ -4,6 +4,7 @@
       :class="name"
       class="h-[90px] w-[728px] mx-auto inline-block"
       data-ad-client="ca-pub-8993913594775765"
+      data-full-width-responsive="true"
       data-ad-slot="9469547902"
     ></ins>
   </div>
