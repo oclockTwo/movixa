@@ -45,11 +45,11 @@ export default defineNuxtConfig({
           src: "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8993913594775765",
           crossorigin: "anonymous",
         },
-        {
-          async: true,
-          "data-website-id": "df7923f8-c759-4736-9b7d-b57f42d69b5d",
-          src: "https://umami-six-theta.vercel.app/script.js",
-        },
+        // {
+        //   async: true,
+        //   "data-website-id": "df7923f8-c759-4736-9b7d-b57f42d69b5d",
+        //   src: "https://umami-six-theta.vercel.app/script.js",
+        // },
         {
           defer: true,
           "data-domain": "movixa.com",
