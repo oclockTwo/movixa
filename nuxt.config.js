@@ -56,6 +56,11 @@ export default defineNuxtConfig({
           src: "https://plausible.io/js/plausible.js",
         },
         {
+          defer: true,
+          "data-domain": "movixa.com",
+          src: "https://yearbookai.online/js/script.js",
+        },
+        {
           async: true,
           src: "https://www.googletagmanager.com/gtag/js?id=G-J950DBPM75",
         },
