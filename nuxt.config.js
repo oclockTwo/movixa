@@ -50,11 +50,11 @@ export default defineNuxtConfig({
         //   "data-website-id": "df7923f8-c759-4736-9b7d-b57f42d69b5d",
         //   src: "https://umami-six-theta.vercel.app/script.js",
         // },
-        {
-          defer: true,
-          "data-domain": "movixa.com",
-          src: "https://plausible.io/js/plausible.js",
-        },
+        // {
+        //   defer: true,
+        //   "data-domain": "movixa.com",
+        //   src: "https://plausible.io/js/plausible.js",
+        // },
         {
           defer: true,
           "data-domain": "movixa.com",
